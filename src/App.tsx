@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 import Start from "./pages/Start";
 import FrameType from "./pages/FrameType";
 import { PhotoBoothProvider } from "./contexts/PhotoBoothProvider";
+import Print from "./pages/Print";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                     <Route element={<MainLayout />}>
                         <Route index element={<Start />} />
                         <Route path="/frame-type" element={<FrameType />} />
+                        <Route path="/print" element={<Print />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
