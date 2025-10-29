@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 
 const MainLayout = () => {
     return (
-        <main>
+        <main className="h-screen p-12 overflow-hidden flex flex-col items-center">
             <Outlet />
         </main>
     );
