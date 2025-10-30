@@ -9,6 +9,8 @@ export default function PhotoShoot() {
   const TOTAL_SHOTS = 8;
   const INTERVAL = 7000;
 
+  const [remainingTime, setRemainingTime] = useState(INTERVAL / 1000);
+
   useEffect(() => {
     async function setupCamera() {
       try {
@@ -25,14 +27,18 @@ export default function PhotoShoot() {
 
     async function startShooting() {
       for (let i = 0; i < TOTAL_SHOTS; i++) {
-        await new Promise((res) => setTimeout(res, INTERVAL));
+        for (let t = INTERVAL / 1000; t > 0; t--) {
+          setRemainingTime(t);
+          await new Promise((res) => setTimeout(res, 1000));
+        }
+
         takePhoto();
         setCurrentCount(i + 1);
       }
     }
 
-    // setupCamera();
-    // startShooting();
+    setupCamera();
+    startShooting();
 
     return () => {
       //다음페이지로 넘어가면 종료
@@ -60,13 +66,21 @@ export default function PhotoShoot() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full items-center">
+    <div className="flex flex-col w-full h-full items-center gap-2">
       <Heading>사진 촬영</Heading>
-      <div>
-        <div></div>
-        <div></div>
+      <div className="flex w-[70%] justify-between items-center mt-5">
+        <div className="bg-primary-600 text-white px-4 py-2 flex rounded-full text-sm font-semibold gap-2 items-center">
+          <img src="/assets/camera.svg" alt="camera" />
+          <span>
+            {currentCount}/{TOTAL_SHOTS}
+          </span>
+        </div>
+        <div className="flex bg-primary-600 text-white px-4 py-2 text-sm rounded-full font-semibold gap-2 items-center">
+          <img src="/assets/timer.svg" alt="timer" />
+          <span> 00:0{remainingTime}</span>
+        </div>
       </div>
-      <div className="w-[80%] aspect-[7/5] bg-gray-200">
+      <div className="w-[70%] aspect-[7/5] bg-gray-200 relative overflow-hidden">
         <video
           ref={videoRef}
           autoPlay
@@ -74,6 +88,19 @@ export default function PhotoShoot() {
           className="w-full h-full object-cover -scale-x-100"
         />
       </div>
+
+      {/* {photos.length > 0 && (
+        <div className="grid grid-cols-4 gap-2 mt-6">
+          {photos.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={`photo-${i}`}
+              className="aspect-[4/3] object-cover rounded-md border"
+            />
+          ))}
+        </div>
+      )} */}
     </div>
   );
 }
