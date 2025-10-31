@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, type Dispatch, type SetStateAction } from "react";
 import type { FrameType } from "../types/FrameType";
 
 export interface PhotoBoothState {
@@ -11,12 +11,12 @@ export interface PhotoBoothState {
 }
 
 export interface PhotoBoothContextType extends PhotoBoothState {
-  setFrameType: (frame: FrameType) => void;
-  setCapturedPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-  setSelectedPhotos: (photos: File[]) => void;
-  setBackgroundFrame: (frame: string) => void;
-  setPrintCount: (count: number) => void;
-  setPublishToGuestbook: (enabled: boolean) => void;
+  setFrameType: Dispatch<SetStateAction<FrameType | null>>;
+  setCapturedPhotos: Dispatch<SetStateAction<File[]>>;
+  setSelectedPhotos: Dispatch<SetStateAction<File[]>>;
+  setBackgroundFrame: Dispatch<SetStateAction<string | null>>;
+  setPrintCount: Dispatch<SetStateAction<number>>;
+  setPublishToGuestbook: Dispatch<SetStateAction<boolean>>;
 }
 
 export const PhotoBoothContext = createContext<
