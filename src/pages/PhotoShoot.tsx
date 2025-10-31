@@ -44,7 +44,9 @@ export default function PhotoShoot() {
         return () => {
             //다음페이지로 넘어가면 종료
             if (videoRef.current && videoRef.current.srcObject) {
-                const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+                const tracks = (
+                    videoRef.current.srcObject as MediaStream
+                ).getTracks();
                 tracks.forEach((track) => track.stop());
             }
         };
