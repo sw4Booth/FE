@@ -5,7 +5,6 @@ import FrameType from "./pages/FrameType";
 import { PhotoBoothProvider } from "./contexts/PhotoBoothProvider";
 import PhotoShoot from "./pages/PhotoShoot";
 import Print from "./pages/Print";
-
 function App() {
   return (
     <PhotoBoothProvider>
