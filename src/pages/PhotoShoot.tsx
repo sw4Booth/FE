@@ -1,10 +1,11 @@
 import Heading from "../components/Heading";
 import { useEffect, useRef, useState } from "react";
+import { usePhotoBooth } from "../hooks/usePhotoBooth";
 
 export default function PhotoShoot() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [currentCount, setCurrentCount] = useState(0);
-  const [photos, setPhotos] = useState<string[]>([]);
+  const { capturedPhotos, setCapturedPhotos } = usePhotoBooth();
 
   const TOTAL_SHOTS = 8;
   const INTERVAL = 7000;
@@ -37,8 +38,8 @@ export default function PhotoShoot() {
       }
     }
 
-    setupCamera();
-    startShooting();
+    // setupCamera();
+    // startShooting();
 
     return () => {
       //다음페이지로 넘어가면 종료
@@ -61,8 +62,20 @@ export default function PhotoShoot() {
     ctx.scale(-1, 1);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const dataURL = canvas.toDataURL("image/png");
-    setPhotos((prev) => [...prev, dataURL]);
+    const dataURL = canvas.toDataURL("image/webP");
+
+    const binaryString = atob(dataURL.split(",")[1]);
+    const byteArray = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      byteArray[i] = binaryString.charCodeAt(i);
+    }
+
+    const blob = new Blob([byteArray], { type: "image/webP" });
+    const file = new File([blob], `photo-${Date.now()}.webp`, {
+      type: "image/webP",
+    });
+
+    setCapturedPhotos((prev) => [...prev, file]);
   };
 
   return (
@@ -89,14 +102,14 @@ export default function PhotoShoot() {
         />
       </div>
 
-      {/* {photos.length > 0 && (
+      {/* {capturedPhotos.length > 0 && (
         <div className="grid grid-cols-4 gap-2 mt-6">
-          {photos.map((src, i) => (
+          {capturedPhotos.map((file, i) => (
             <img
               key={i}
-              src={src}
+              src={URL.createObjectURL(file)}
               alt={`photo-${i}`}
-              className="aspect-[4/3] object-cover rounded-md border"
+              className="aspect-[7/5] object-cover rounded-md border"
             />
           ))}
         </div>
