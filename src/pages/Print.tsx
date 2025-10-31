@@ -28,7 +28,7 @@ export default function Print() {
     return (
         <div className="flex flex-col w-full h-full items-center gap-6">
             <Heading>사진 출력</Heading>
-            <div className="flex flex-col items-center justify-center gap-12 w-[80%] h-[50%] mt-24 p-12 bg-primary-100 rounded-lg">
+            <div className="flex flex-col grow items-center justify-center gap-12 w-[70%] p-12 bg-primary-100 rounded-lg">
                 <div className="flex items-center gap-4">
                     <span className="text-lg font-semibold">출력 매수 선택</span>
                     <div className="flex items-center gap-4 bg-white p-1 rounded-full">
