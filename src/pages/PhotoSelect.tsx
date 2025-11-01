@@ -34,7 +34,11 @@ export default function PhotoSelect() {
             <Heading>사진을 선택해주세요</Heading>
             <div className="flex flex-row w-full justify-center mt-10">
                 <div className="mx-auto my-auto ml-20">
-                    <PhotoFrame frameType="landscape" className="h-[70vh]" />
+                    <PhotoFrame
+                        frameType="landscape"
+                        className="h-[70vh]"
+                        photos={selectedPhotos}
+                    />
                 </div>
 
                 <div className="w-[70%] my-auto mx-auto mr-20">
