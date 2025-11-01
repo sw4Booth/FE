@@ -86,7 +86,7 @@ export default function PhotoShoot() {
                 </div>
                 <div className="flex bg-primary-600 text-white px-4 py-2 text-sm rounded-full font-semibold gap-2 items-center">
                     <img src="/assets/timer.svg" alt="timer" />
-                    <span> 00:0{remainingTime}</span>
+                    <span>{remainingTime}초</span>
                 </div>
             </div>
             <div className="w-[70%] aspect-[7/5] bg-gray-200 relative overflow-hidden">
@@ -98,18 +98,18 @@ export default function PhotoShoot() {
                 />
             </div>
 
-            {/* {capturedPhotos.length > 0 && (
-        <div className="grid grid-cols-4 gap-2 mt-6">
-          {capturedPhotos.map((file, i) => (
-            <img
-              key={i}
-              src={URL.createObjectURL(file)}
-              alt={`photo-${i}`}
-              className="aspect-[7/5] object-cover rounded-md border"
-            />
-          ))}
-        </div>
-      )} */}
+            {capturedPhotos.length > 0 && (
+                <div className="grid grid-cols-4 gap-2 mt-6">
+                    {capturedPhotos.map((file, i) => (
+                        <img
+                            key={i}
+                            src={URL.createObjectURL(file)}
+                            alt={`photo-${i}`}
+                            className="aspect-[7/5] object-cover rounded-md border"
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
