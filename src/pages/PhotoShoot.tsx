@@ -9,7 +9,7 @@ const SHOOT_INTERVAL = 7000;
 export default function PhotoShoot() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [currentCount, setCurrentCount] = useState(0);
-    const { capturedPhotos, setCapturedPhotos } = usePhotoBooth();
+    const { setCapturedPhotos } = usePhotoBooth();
     const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
     const navigate = useNavigate();
 
