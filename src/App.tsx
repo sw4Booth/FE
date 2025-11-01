@@ -8,6 +8,8 @@ import Print from "./pages/Print";
 import PrintProgress from "./pages/PrintProgress";
 import Share from "./pages/Share";
 
+import PhotoSelect from "./pages/PhotoSelect";
+
 function App() {
     return (
         <PhotoBoothProvider>
@@ -17,9 +19,8 @@ function App() {
                         <Route index element={<Start />} />
                         <Route path="/frame-type" element={<FrameType />} />
                         <Route path="/photo-shoot" element={<PhotoShoot />} />
+                        <Route path="/photo-select" element={<PhotoSelect />} />
                         <Route path="/print" element={<Print />} />
-                        <Route path="/print-progress" element={<PrintProgress />} />
-                        <Route path="/share/:id" element={<Share />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
