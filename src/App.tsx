@@ -1,10 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import { PhotoBoothProvider } from "./contexts/PhotoBoothProvider";
 import MainLayout from "./layouts/MainLayout";
 import Start from "./pages/Start";
 import FrameType from "./pages/FrameType";
-import { PhotoBoothProvider } from "./contexts/PhotoBoothProvider";
 import PhotoShoot from "./pages/PhotoShoot";
 import Print from "./pages/Print";
+import PrintProgress from "./pages/PrintProgress";
+import Share from "./pages/Share";
+
 import PhotoSelect from "./pages/PhotoSelect";
 
 function App() {
