@@ -53,8 +53,9 @@ export default function PhotoShoot() {
     }, []);
 
     const takePhoto = () => {
-        if (!videoRef.current) return;
         const video = videoRef.current;
+        if (!video) return;
+
         const canvas = document.createElement("canvas");
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -64,20 +65,13 @@ export default function PhotoShoot() {
         ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        const dataURL = canvas.toDataURL("image/webP");
-
-        const binaryString = atob(dataURL.split(",")[1]);
-        const byteArray = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-            byteArray[i] = binaryString.charCodeAt(i);
-        }
-
-        const blob = new Blob([byteArray], { type: "image/webP" });
-        const file = new File([blob], `photo-${Date.now()}.webp`, {
-            type: "image/webP",
-        });
-
-        setCapturedPhotos((prev) => [...prev, file]);
+        canvas.toBlob((blob) => {
+            if (!blob) return;
+            const file = new File([blob], `photo-${Date.now()}.webp`, {
+                type: "image/webp",
+            });
+            setCapturedPhotos((prev) => [...prev, file]);
+        }, "image/webp");
     };
 
     return (
