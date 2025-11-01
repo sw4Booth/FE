@@ -13,12 +13,12 @@ export default function Share() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col w-full h-full items-center gap-6">
             <Heading>로고 영역</Heading>
-            <div className="flex flex-col gap-4">
+            <div className="flex grow">
                 <PhotoFrame frameType="landscape" />
-                <Button variant="outline">사진 다운로드</Button>
             </div>
+            <Button variant="outline">사진 다운로드</Button>
         </div>
     );
 }
