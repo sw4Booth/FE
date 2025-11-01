@@ -18,7 +18,7 @@ export default function Share() {
             <div className="flex grow">
                 <PhotoFrame frameType="landscape" />
             </div>
-            <Button variant="outline">사진 다운로드</Button>
+            <Button variant="solid">사진 다운로드</Button>
         </div>
     );
 }
