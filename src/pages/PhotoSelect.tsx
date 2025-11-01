@@ -1,4 +1,5 @@
 import Heading from "../components/Heading";
+import NextButton from "../components/NextButton";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 
@@ -36,11 +37,10 @@ export default function PhotoSelect() {
                 <div className="mx-auto my-auto ml-20">
                     <PhotoFrame
                         frameType="landscape"
-                        className="h-[70vh]"
+                        className="h-[72vh]"
                         photos={selectedPhotos}
                     />
                 </div>
-
                 <div className="w-[70%] my-auto mx-auto mr-20">
                     {capturedPhotos.length > 0 && (
                         <div className="grid grid-cols-4">
@@ -68,14 +68,7 @@ export default function PhotoSelect() {
                     )}
                 </div>
             </div>
-
-            <button className="flex items-end ml-auto mt-5 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg rounded-full mr-10">
-                <img
-                    src="/assets/next.svg"
-                    alt="next"
-                    className="w-[50px] h-[50px]"
-                />
-            </button>
+            <NextButton />
         </div>
     );
 }
