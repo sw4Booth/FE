@@ -10,7 +10,7 @@ export default function PhotoShoot() {
     const [currentCount, setCurrentCount] = useState(0);
     const { capturedPhotos, setCapturedPhotos } = usePhotoBooth();
 
-    const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL / 1000);
+    const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
 
     useEffect(() => {
         async function setupCamera() {
@@ -27,15 +27,26 @@ export default function PhotoShoot() {
         }
 
         async function startShooting() {
-            for (let i = 0; i < TOTAL_SHOTS; i++) {
-                for (let t = SHOOT_INTERVAL / 1000; t > 0; t--) {
-                    setRemainingTime(t);
-                    await new Promise((res) => setTimeout(res, 1000));
-                }
+            let timeLeft = SHOOT_INTERVAL;
 
-                takePhoto();
-                setCurrentCount(i + 1);
-            }
+            const timer = setInterval(() => {
+                timeLeft -= 1000;
+                setRemainingTime(timeLeft);
+
+                if (timeLeft <= 0) {
+                    takePhoto();
+                    setCurrentCount((prev) => {
+                        const newCount = prev + 1;
+                        if (newCount >= TOTAL_SHOTS) {
+                            clearInterval(timer);
+                        }
+                        return newCount;
+                    });
+
+                    timeLeft = SHOOT_INTERVAL;
+                    setRemainingTime(SHOOT_INTERVAL);
+                }
+            }, 1000);
         }
 
         // setupCamera();
@@ -86,7 +97,7 @@ export default function PhotoShoot() {
                 </div>
                 <div className="flex bg-primary-600 text-white px-4 py-2 text-sm rounded-full font-semibold gap-2 items-center">
                     <img src="/assets/timer.svg" alt="timer" />
-                    <span>{remainingTime}초</span>
+                    <span>{Math.ceil(remainingTime / 1000)}초</span>
                 </div>
             </div>
             <div className="w-[70%] aspect-[7/5] bg-gray-200 relative overflow-hidden">
