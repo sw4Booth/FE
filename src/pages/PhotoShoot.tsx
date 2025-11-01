@@ -2,15 +2,15 @@ import Heading from "../components/Heading";
 import { useEffect, useRef, useState } from "react";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 
+const TOTAL_SHOTS = 8;
+const SHOOT_INTERVAL = 7000;
+
 export default function PhotoShoot() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [currentCount, setCurrentCount] = useState(0);
     const { capturedPhotos, setCapturedPhotos } = usePhotoBooth();
 
-    const TOTAL_SHOTS = 8;
-    const INTERVAL = 7000;
-
-    const [remainingTime, setRemainingTime] = useState(INTERVAL / 1000);
+    const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL / 1000);
 
     useEffect(() => {
         async function setupCamera() {
@@ -28,7 +28,7 @@ export default function PhotoShoot() {
 
         async function startShooting() {
             for (let i = 0; i < TOTAL_SHOTS; i++) {
-                for (let t = INTERVAL / 1000; t > 0; t--) {
+                for (let t = SHOOT_INTERVAL / 1000; t > 0; t--) {
                     setRemainingTime(t);
                     await new Promise((res) => setTimeout(res, 1000));
                 }
