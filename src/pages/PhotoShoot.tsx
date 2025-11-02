@@ -1,6 +1,7 @@
 import Heading from "../components/Heading";
 import { useEffect, useRef, useState } from "react";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
+import { useNavigate } from "react-router";
 
 const TOTAL_SHOTS = 8;
 const SHOOT_INTERVAL = 7000;
@@ -8,9 +9,9 @@ const SHOOT_INTERVAL = 7000;
 export default function PhotoShoot() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [currentCount, setCurrentCount] = useState(0);
-    const { capturedPhotos, setCapturedPhotos } = usePhotoBooth();
-
+    const { setCapturedPhotos } = usePhotoBooth();
     const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function setupCamera() {
@@ -39,6 +40,8 @@ export default function PhotoShoot() {
                         const newCount = prev + 1;
                         if (newCount >= TOTAL_SHOTS) {
                             clearInterval(timer);
+                            stopCamera();
+                            setTimeout(() => navigate("/photo-select"), 500);
                         }
                         return newCount;
                     });
@@ -49,19 +52,20 @@ export default function PhotoShoot() {
             }, 1000);
         }
 
-        // setupCamera();
-        // startShooting();
-
-        return () => {
-            //다음페이지로 넘어가면 종료
+        function stopCamera() {
             if (videoRef.current && videoRef.current.srcObject) {
                 const tracks = (
                     videoRef.current.srcObject as MediaStream
                 ).getTracks();
                 tracks.forEach((track) => track.stop());
             }
-        };
-    }, []);
+        }
+
+        setupCamera();
+        startShooting();
+
+        return () => stopCamera();
+    }, [navigate]);
 
     const takePhoto = () => {
         const video = videoRef.current;
@@ -108,19 +112,6 @@ export default function PhotoShoot() {
                     className="w-full h-full object-cover -scale-x-100"
                 />
             </div>
-
-            {capturedPhotos.length > 0 && (
-                <div className="grid grid-cols-4 gap-2 mt-6">
-                    {capturedPhotos.map((file, i) => (
-                        <img
-                            key={i}
-                            src={URL.createObjectURL(file)}
-                            alt={`photo-${i}`}
-                            className="aspect-[7/5] object-cover rounded-md border"
-                        />
-                    ))}
-                </div>
-            )}
         </div>
     );
 }
