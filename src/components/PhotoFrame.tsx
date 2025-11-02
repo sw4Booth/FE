@@ -54,9 +54,9 @@ const PhotoFrame = ({ frameType, className, photos }: Props) => {
                     height="260"
                     style={{ fill: "white" }}
                 />
-                {imgUrls![1] && (
+                {imgUrls[1] && (
                     <image
-                        href={imgUrls![1]}
+                        href={imgUrls[1]}
                         x="66"
                         y="73"
                         width="466"
@@ -73,9 +73,9 @@ const PhotoFrame = ({ frameType, className, photos }: Props) => {
                     height="260"
                     style={{ fill: "white" }}
                 />
-                {imgUrls![2] && (
+                {imgUrls[2] && (
                     <image
-                        href={imgUrls![2]}
+                        href={imgUrls[2]}
                         x="66"
                         y="73"
                         width="466"
@@ -92,9 +92,9 @@ const PhotoFrame = ({ frameType, className, photos }: Props) => {
                     height="260"
                     style={{ fill: "white" }}
                 />
-                {imgUrls![3] && (
+                {imgUrls[3] && (
                     <image
-                        href={imgUrls![3]}
+                        href={imgUrls[3]}
                         x="66"
                         y="73"
                         width="466"
