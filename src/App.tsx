@@ -21,6 +21,11 @@ function App() {
                         <Route path="/photo-shoot" element={<PhotoShoot />} />
                         <Route path="/photo-select" element={<PhotoSelect />} />
                         <Route path="/print" element={<Print />} />
+                        <Route
+                            path="/print-progress"
+                            element={<PrintProgress />}
+                        />
+                        <Route path="/share/:id" element={<Share />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
