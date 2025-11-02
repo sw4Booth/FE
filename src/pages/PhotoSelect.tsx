@@ -2,12 +2,26 @@ import Heading from "../components/Heading";
 import NextButton from "../components/NextButton";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
+import { useMemo, useEffect } from "react";
 
 const PHOTO_SELECT_LIMIT = 4;
 
 export default function PhotoSelect() {
-    const { capturedPhotos } = usePhotoBooth();
-    const { selectedPhotos, setSelectedPhotos } = usePhotoBooth();
+    const { capturedPhotos, selectedPhotos, setSelectedPhotos } =
+        usePhotoBooth();
+
+    const photoUrls = useMemo(() => {
+        return capturedPhotos.map((file) => ({
+            file,
+            url: URL.createObjectURL(file),
+        }));
+    }, [capturedPhotos]);
+
+    useEffect(() => {
+        return () => {
+            photoUrls.forEach(({ url }) => URL.revokeObjectURL(url));
+        };
+    }, [photoUrls]);
 
     const handlePhotoClick = (photo: File) => {
         const isExists = selectedPhotos.some(
@@ -42,9 +56,9 @@ export default function PhotoSelect() {
                     />
                 </div>
                 <div className="w-[70%] my-auto mx-auto mr-20">
-                    {capturedPhotos.length > 0 && (
+                    {photoUrls.length > 0 && (
                         <div className="grid grid-cols-4">
-                            {capturedPhotos.map((file, i) => {
+                            {photoUrls.map(({ file, url }, i) => {
                                 const isSelected = selectedPhotos.some(
                                     (p) =>
                                         p.name === file.name &&
@@ -53,7 +67,7 @@ export default function PhotoSelect() {
                                 return (
                                     <img
                                         key={i}
-                                        src={URL.createObjectURL(file)}
+                                        src={url}
                                         alt={`photo-${i}`}
                                         onClick={() => handlePhotoClick(file)}
                                         data-selected={isSelected}
