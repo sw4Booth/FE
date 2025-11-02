@@ -7,7 +7,7 @@ interface Props {
 }
 
 const PhotoFrame = ({ frameType, className, photos }: Props) => {
-    const imgUrls = photos?.map((file) => URL.createObjectURL(file));
+    const imgUrls = photos?.map((file) => URL.createObjectURL(file)) ?? [];
 
     console.log("PhotoFrame photos:", photos);
 
@@ -35,9 +35,9 @@ const PhotoFrame = ({ frameType, className, photos }: Props) => {
                     height="260"
                     style={{ fill: "white" }}
                 />
-                {imgUrls![0] && (
+                {imgUrls[0] && (
                     <image
-                        href={imgUrls![0]}
+                        href={imgUrls[0]}
                         x="66"
                         y="73"
                         width="466"
