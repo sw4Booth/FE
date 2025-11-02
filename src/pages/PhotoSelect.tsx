@@ -33,7 +33,7 @@ export default function PhotoSelect() {
     return (
         <div className="flex flex-col items-center w-full">
             <Heading>사진을 선택해주세요</Heading>
-            <div className="flex flex-row w-full justify-center mt-10">
+            <div className="flex w-full justify-center mt-10">
                 <div className="mx-auto my-auto ml-20">
                     <PhotoFrame
                         frameType="landscape"
@@ -56,11 +56,9 @@ export default function PhotoSelect() {
                                         src={URL.createObjectURL(file)}
                                         alt={`photo-${i}`}
                                         onClick={() => handlePhotoClick(file)}
-                                        className={`aspect-[7/5] object-cover p-0.5 cursor-pointer transition-all duration-200 ${
-                                            isSelected
-                                                ? "opacity-50"
-                                                : "opacity-100 hover:opacity-80"
-                                        }`}
+                                        data-selected={isSelected}
+                                        className="aspect-[7/5] object-cover p-0.5 cursor-pointer transition-all duration-200 
+                                        hover:opacity-80 data-[selected=true]:opacity-50"
                                     />
                                 );
                             })}
