@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
+import { useNavigate } from "react-router";
 
 const MAX_PRINT_COUNT = 4;
 
 export default function Print() {
     const { printCount, shouldPublishToGuestbook, setPrintCount, setPublishToGuestbook } = usePhotoBooth();
+    const navigate = useNavigate();
 
     const handleCountDecrementClick = () => {
         setPrintCount((prev) => Math.max(1, prev - 1));
@@ -47,7 +49,7 @@ export default function Print() {
                     <span className="text-lg font-semibold">방명록에 등록하기</span>
                 </label>
             </div>
-            <Button size="lg">출력하기</Button>
+            <Button size="lg" onClick={() => navigate("/print-progress")}>출력하기</Button>
         </div>
     );
 }
