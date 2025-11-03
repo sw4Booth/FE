@@ -4,9 +4,11 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import type { FrameType } from "../types/FrameType";
+import { useNavigate } from "react-router";
 
 export default function FrameType() {
     const { frameType, setFrameType } = usePhotoBooth();
+    const navigate = useNavigate();
 
     const handleFrameTypeClick = (frameType: FrameType) => {
         setFrameType(frameType);
@@ -29,7 +31,7 @@ export default function FrameType() {
                     <span className="text-lg font-semibold">세로 프레임</span>
                 </div>
             </div>
-            <Button size="lg" disabled={!frameType}>선택 완료</Button>
+            <Button size="lg" onClick={() => navigate("/photo-shoot")} disabled={!frameType}>선택 완료</Button>
         </div>
     );
 }

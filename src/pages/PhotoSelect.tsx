@@ -1,5 +1,6 @@
+import { useNavigate } from "react-router";
+import Button from "../components/Button";
 import Heading from "../components/Heading";
-import NextButton from "../components/NextButton";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useMemo, useEffect } from "react";
@@ -9,6 +10,8 @@ const PHOTO_SELECT_LIMIT = 4;
 export default function PhotoSelect() {
     const { capturedPhotos, selectedPhotos, setSelectedPhotos } =
         usePhotoBooth();
+    const navigate = useNavigate();
+
 
     const photoUrls = useMemo(() => {
         return capturedPhotos.map((file) => ({
@@ -80,7 +83,7 @@ export default function PhotoSelect() {
                     )}
                 </div>
             </div>
-            <NextButton />
+            <Button size="lg" onClick={() => navigate("/print")} disabled={selectedPhotos.length < PHOTO_SELECT_LIMIT}>선택 완료</Button>
         </div>
     );
 }
