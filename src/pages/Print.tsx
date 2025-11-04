@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useNavigate } from "react-router";
+import { PRINT_PROGRESS } from "../constants/routes";
 
 const MAX_PRINT_COUNT = 4;
 
@@ -49,7 +50,7 @@ export default function Print() {
                     <span className="text-lg font-semibold">방명록에 등록하기</span>
                 </label>
             </div>
-            <Button size="lg" onClick={() => navigate("/print-progress")}>출력하기</Button>
+            <Button size="lg" onClick={() => navigate(PRINT_PROGRESS)}>출력하기</Button>
         </div>
     );
 }

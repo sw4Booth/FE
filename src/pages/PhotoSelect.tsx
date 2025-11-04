@@ -4,6 +4,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useMemo, useEffect } from "react";
+import { PRINT } from "../constants/routes";
 
 const PHOTO_SELECT_LIMIT = 4;
 
@@ -52,11 +53,7 @@ export default function PhotoSelect() {
             <Heading>사진을 선택해주세요</Heading>
             <div className="flex w-full justify-center mt-10">
                 <div className="mx-auto my-auto ml-20">
-                    <PhotoFrame
-                        frameType="landscape"
-                        className="h-[72vh]"
-                        photos={selectedPhotos}
-                    />
+                    <PhotoFrame frameType="landscape" photos={selectedPhotos} />
                 </div>
                 <div className="w-[70%] my-auto mx-auto mr-20">
                     {photoUrls.length > 0 && (
@@ -83,7 +80,7 @@ export default function PhotoSelect() {
                     )}
                 </div>
             </div>
-            <Button size="lg" onClick={() => navigate("/print")} disabled={selectedPhotos.length < PHOTO_SELECT_LIMIT}>선택 완료</Button>
+            <Button size="lg" onClick={() => navigate(PRINT)} disabled={selectedPhotos.length < PHOTO_SELECT_LIMIT}>선택 완료</Button>
         </div>
     );
 }
