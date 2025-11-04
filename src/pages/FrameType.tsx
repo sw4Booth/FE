@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import type { FrameType } from "../types/FrameType";
+import type { FrameType } from "../types/Frame";
 import { useNavigate } from "react-router";
 
 export default function FrameType() {

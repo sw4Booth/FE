@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PhotoBoothContext, type PhotoBoothContextType } from "./PhotoBoothContext";
-import type { FrameType } from "../types/FrameType";
+import type { FrameType } from "../types/Frame";
 
 export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [frameType, setFrameType] = useState<FrameType | null>(null);
