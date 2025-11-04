@@ -21,6 +21,10 @@ function App() {
                         <Route path="/frame-type" element={<FrameType />} />
                         <Route path="/photo-shoot" element={<PhotoShoot />} />
                         <Route path="/photo-select" element={<PhotoSelect />} />
+                        <Route
+                            path="/back-frame-select"
+                            element={<BackFrameSelect />}
+                        />
                         <Route path="/print" element={<Print />} />
                         <Route
                             path="/print-progress"
