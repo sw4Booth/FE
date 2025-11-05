@@ -1,164 +1,58 @@
-import type { FrameType } from "../types/FrameType";
+import { useEffect, useMemo } from "react";
+import type { FrameType, FrameSkin } from "../types/Frame";
 
 interface Props {
     frameType: FrameType;
-    className?: string;
     photos?: File[];
+    skin?: FrameSkin;
 }
 
-const PhotoFrame = ({ frameType, className, photos }: Props) => {
-    const imgUrls = photos?.map((file) => URL.createObjectURL(file)) ?? [];
+const PHOTO_COUNT = 4;
 
-    console.log("PhotoFrame photos:", photos);
+const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
+    const photoUrls = useMemo(() => {
+        return photos.map((file) => URL.createObjectURL(file));
+    }, [photos]);
 
-    return frameType === "landscape" ? (
-        <svg
-            className={["fill-primary-500", className].join(" ")}
-            viewBox="0 0 600 1800"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            xmlSpace="preserve"
-            style={{
-                fillRule: "evenodd",
-                clipRule: "evenodd",
-                strokeLinejoin: "round",
-                strokeMiterlimit: 2,
-            }}
+    // cleanup
+    useEffect(() => {
+        return () => {
+            photoUrls.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [photoUrls]);
+
+
+    return (
+        <div className={["flex", "flex-col", "relative", frameType === "landscape" ? "w-[2in]" : "w-[4in]", "h-[6in]", "p-[0.125in]", "gap-[0.0625in]", "bg-primary-500"].join(" ")}
+            style={{ backgroundColor: skin?.bgColor }}
         >
-            <rect x="0" y="0" width="600" height="1800" />
-            <g transform="matrix(1.12661,0,0,1.44222,-36.8562,-67.6914)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-                {imgUrls[0] && (
-                    <image
-                        href={imgUrls[0]}
-                        x="66"
-                        y="73"
-                        width="466"
-                        height="260"
-                        preserveAspectRatio="xMidYMid slice"
-                    />
-                )}
-            </g>
-            <g transform="matrix(1.12661,0,0,1.44222,-36.8562,344.717)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-                {imgUrls[1] && (
-                    <image
-                        href={imgUrls[1]}
-                        x="66"
-                        y="73"
-                        width="466"
-                        height="260"
-                        preserveAspectRatio="xMidYMid slice"
-                    />
-                )}
-            </g>
-            <g transform="matrix(1.12661,0,0,1.44222,-36.8562,757.069)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-                {imgUrls[2] && (
-                    <image
-                        href={imgUrls[2]}
-                        x="66"
-                        y="73"
-                        width="466"
-                        height="260"
-                        preserveAspectRatio="xMidYMid slice"
-                    />
-                )}
-            </g>
-            <g transform="matrix(1.12661,0,0,1.44222,-36.8562,1169.72)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-                {imgUrls[3] && (
-                    <image
-                        href={imgUrls[3]}
-                        x="66"
-                        y="73"
-                        width="466"
-                        height="260"
-                        preserveAspectRatio="xMidYMid slice"
-                    />
-                )}
-            </g>
-        </svg>
-    ) : (
-        <svg
-            className={["fill-primary-500", className].join(" ")}
-            viewBox="0 0 1200 1800"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            xmlSpace="preserve"
-            style={{
-                fillRule: "evenodd",
-                clipRule: "evenodd",
-                strokeLinejoin: "round",
-                strokeMiterlimit: 2,
-            }}
-        >
-            <g transform="matrix(2,0,0,1,0,0)">
-                <rect x="0" y="0" width="600" height="1800" />
-            </g>
-            <g transform="matrix(1.16521,0,0,3.0285,-39.4037,-183.489)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-            </g>
-            <g transform="matrix(1.16521,0,0,3.0285,542.529,-183.489)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-            </g>
-            <g transform="matrix(1.16521,0,0,3.0285,-39.4037,641.4)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-            </g>
-            <g transform="matrix(1.16521,0,0,3.0285,542.529,641.4)">
-                <rect
-                    x="66"
-                    y="73"
-                    width="466"
-                    height="260"
-                    style={{ fill: "white" }}
-                />
-            </g>
-        </svg>
+            {frameType === "landscape" ? (
+                // 2x6
+                Array.from({ length: PHOTO_COUNT }).map((_, i) => (
+                    <div key={i} className="w-[1.75in] h-[1.25in] bg-white overflow-hidden">
+                        {photoUrls[i] ? (
+                            <img src={photoUrls[i]} alt={`photo-${i}`} className="w-full h-full object-cover block" />
+                        ) : (
+                            <div className="w-full h-full bg-white" />
+                        )}
+                    </div>
+                ))
+            ) : (
+                // 4x6
+                <div className="grid grid-cols-[repeat(2,1.84375in)] grid-rows-[repeat(2,2.6875in)] gap-[0.0625in]">
+                    {Array.from({ length: PHOTO_COUNT }).map((_, i) => (
+                        <div key={i} className="bg-white overflow-hidden">
+                            {photoUrls[i] ? (
+                                <img src={photoUrls[i]} alt={`photo-${i}`} className="w-full h-full object-cover block" />
+                            ) : (
+                                <div className="w-full h-full bg-white" />
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+            {skin?.decorations}
+        </div>
     );
 };
 
