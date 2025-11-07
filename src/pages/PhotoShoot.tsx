@@ -2,6 +2,7 @@ import Heading from "../components/Heading";
 import { useEffect, useRef, useState } from "react";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useNavigate } from "react-router";
+import { PHOTO_SELECT } from "../constants/routes";
 
 const TOTAL_SHOTS = 8;
 const SHOOT_INTERVAL = 7000;
@@ -41,7 +42,7 @@ export default function PhotoShoot() {
                         if (newCount >= TOTAL_SHOTS) {
                             clearInterval(timer);
                             stopCamera();
-                            setTimeout(() => navigate("/photo-select"), 500);
+                            setTimeout(() => navigate(PHOTO_SELECT), 500);
                         }
                         return newCount;
                     });
