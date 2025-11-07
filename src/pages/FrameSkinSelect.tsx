@@ -11,7 +11,15 @@ export default function FrameSkinSelect() {
         usePhotoBooth();
     const navigate = useNavigate();
 
-    const frameSkins = [CloudFrame, CloudFrame, CloudFrame, CloudFrame];
+    const frameSkins = [
+        CloudFrame,
+        CloudFrame,
+        CloudFrame,
+        CloudFrame,
+        CloudFrame,
+        CloudFrame,
+        CloudFrame,
+    ];
 
     return (
         <div className="flex flex-col items-center w-full">
@@ -25,11 +33,12 @@ export default function FrameSkinSelect() {
                     />
                 </div>
 
-                <div className="w-[70%] my-auto mx-auto mr-20 scale-80 flex justify-center gap-8 overflow-x-auto overflow-y-hidden">
+                <div className="w-[70%] my-auto mx-auto mr-20 scale-80 flex justify-start gap-8 overflow-x-auto overflow-y-hidden">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}
                             onClick={() => setSelectedFrameSkin(skin)}
+                            data-selected={selectedFrameSkin === skin}
                             className="cursor-pointer transition-all duration-200 
                             hover:opacity-80 data-[selected=true]:opacity-50"
                         >
