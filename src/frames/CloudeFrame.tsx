@@ -7,13 +7,13 @@ export const CloudFrame: FrameSkin = {
             <img
                 src="/assets/frameImg/cloud.png"
                 alt="cloud"
-                className="absolute top-[1in] left-[0.01in] w-[1in] opacity-90 pointer-events-none"
+                className="absolute top-[1in] left-[0.01in] w-[1in] pointer-events-none"
             />
 
             <img
                 src="/assets/frameImg/cloud.png"
                 alt="cloud"
-                className="absolute bottom-[-0.4in] right-[-0.1in] w-[2.5in] opacity-90 pointer-events-none "
+                className="absolute bottom-[-0.4in] right-[-0.1in] w-[2.5in] pointer-events-none "
             />
         </>
     ),
