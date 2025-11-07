@@ -4,7 +4,14 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PRINT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import { CloudFrame } from "../frames/CloudeFrame";
+import {
+    DefaultFrame,
+    CloudFrame,
+    CloudFrame2,
+    CloudFrame3,
+    CloudFrame4,
+    CloudFrame5,
+} from "../frames/CloudFrame";
 
 export default function FrameSkinSelect() {
     const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
@@ -12,13 +19,12 @@ export default function FrameSkinSelect() {
     const navigate = useNavigate();
 
     const frameSkins = [
+        DefaultFrame,
         CloudFrame,
-        CloudFrame,
-        CloudFrame,
-        CloudFrame,
-        CloudFrame,
-        CloudFrame,
-        CloudFrame,
+        CloudFrame2,
+        CloudFrame3,
+        CloudFrame4,
+        CloudFrame5,
     ];
 
     return (
@@ -33,7 +39,7 @@ export default function FrameSkinSelect() {
                     />
                 </div>
 
-                <div className="w-[70%] my-auto mx-auto mr-20 scale-80 flex justify-start gap-8 overflow-x-auto overflow-y-hidden">
+                <div className="w-[80%] my-auto mx-auto mr-20 scale-80 flex justify-start gap-8 overflow-x-auto overflow-y-hidden">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}

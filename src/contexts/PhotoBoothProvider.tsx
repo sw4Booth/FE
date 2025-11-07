@@ -4,6 +4,8 @@ import {
     type PhotoBoothContextType,
 } from "./PhotoBoothContext";
 import type { FrameType, FrameSkin } from "../types/Frame";
+import { DefaultFrame } from "../frames/CloudFrame";
+
 export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
@@ -11,7 +13,7 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     const [capturedPhotos, setCapturedPhotos] = useState<File[]>([]);
     const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
     const [selectedFrameSkin, setSelectedFrameSkin] =
-        useState<FrameSkin | null>(null);
+        useState<FrameSkin | null>(DefaultFrame);
     const [printCount, setPrintCount] = useState(1);
     const [shouldPublishToGuestbook, setPublishToGuestbook] = useState(false);
 
