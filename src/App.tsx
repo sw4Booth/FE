@@ -13,6 +13,7 @@ import {
     FRAME_TYPE_SELECT,
     PHOTO_SELECT,
     PHOTO_SHOOT,
+    BACK_FRAME_SELECT,
     PRINT,
     PRINT_PROGRESS,
     SHARE,
@@ -31,6 +32,10 @@ function App() {
                         />
                         <Route path={PHOTO_SHOOT} element={<PhotoShoot />} />
                         <Route path={PHOTO_SELECT} element={<PhotoSelect />} />
+                        <Route
+                            path={BACK_FRAME_SELECT}
+                            element={<BackFrameSelect />}
+                        />
                         <Route path={PRINT} element={<Print />} />
                         <Route
                             path={PRINT_PROGRESS}
