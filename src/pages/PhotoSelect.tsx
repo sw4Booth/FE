@@ -4,7 +4,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useMemo, useEffect } from "react";
-import { BACK_FRAME_SELECT, PRINT } from "../constants/routes";
+import { BACK_FRAME_SELECT} from "../constants/routes";
 
 const PHOTO_SELECT_LIMIT = 4;
 
