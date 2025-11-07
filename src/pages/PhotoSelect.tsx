@@ -4,7 +4,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useMemo, useEffect } from "react";
-import { BACK_FRAME_SELECT} from "../constants/routes";
+import { FRAME_SKIN_SELECT } from "../constants/routes";
 
 const PHOTO_SELECT_LIMIT = 4;
 
@@ -81,7 +81,7 @@ export default function PhotoSelect() {
             </div>
             <Button
                 size="lg"
-                onClick={() => navigate(BACK_FRAME_SELECT)}
+                onClick={() => navigate(FRAME_SKIN_SELECT)}
                 disabled={selectedPhotos.length < PHOTO_SELECT_LIMIT}
             >
                 선택 완료

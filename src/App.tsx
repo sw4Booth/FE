@@ -6,14 +6,14 @@ import FrameTypeSelect from "./pages/FrameTypeSelect";
 import PhotoShoot from "./pages/PhotoShoot";
 import PhotoSelect from "./pages/PhotoSelect";
 import Print from "./pages/Print";
-import BackFrameSelect from "./pages/BackFrameSelect";
+import FrameSkinSelect from "./pages/FrameSkinSelect";
 import PrintProgress from "./pages/PrintProgress";
 import Share from "./pages/Share";
 import {
     FRAME_TYPE_SELECT,
     PHOTO_SELECT,
     PHOTO_SHOOT,
-    BACK_FRAME_SELECT,
+    FRAME_SKIN_SELECT,
     PRINT,
     PRINT_PROGRESS,
     SHARE,
@@ -33,8 +33,8 @@ function App() {
                         <Route path={PHOTO_SHOOT} element={<PhotoShoot />} />
                         <Route path={PHOTO_SELECT} element={<PhotoSelect />} />
                         <Route
-                            path={BACK_FRAME_SELECT}
-                            element={<BackFrameSelect />}
+                            path={FRAME_SKIN_SELECT}
+                            element={<FrameSkinSelect />}
                         />
                         <Route path={PRINT} element={<Print />} />
                         <Route

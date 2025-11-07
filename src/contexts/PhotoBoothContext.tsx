@@ -5,7 +5,7 @@ export interface PhotoBoothState {
     frameType: FrameType | null;
     capturedPhotos: File[];
     selectedPhotos: File[];
-    backgroundFrame: FrameSkin | null;
+    selectedFrameSkin: FrameSkin | null;
     printCount: number;
     shouldPublishToGuestbook: boolean;
 }
@@ -14,7 +14,7 @@ export interface PhotoBoothContextType extends PhotoBoothState {
     setFrameType: Dispatch<SetStateAction<FrameType | null>>;
     setCapturedPhotos: Dispatch<SetStateAction<File[]>>;
     setSelectedPhotos: Dispatch<SetStateAction<File[]>>;
-    setBackgroundFrame: Dispatch<SetStateAction<FrameSkin | null>>;
+    setSelectedFrameSkin: Dispatch<SetStateAction<FrameSkin | null>>;
     setPrintCount: Dispatch<SetStateAction<number>>;
     setPublishToGuestbook: Dispatch<SetStateAction<boolean>>;
 }
