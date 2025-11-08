@@ -21,17 +21,33 @@ const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
         };
     }, [photoUrls]);
 
-
     return (
-        <div className={["flex", "flex-col", "relative", frameType === "landscape" ? "w-[2in]" : "w-[4in]", "h-[6in]", "p-[0.125in]", "gap-[0.0625in]", "bg-primary-500"].join(" ")}
+        <div
+            className={[
+                "flex",
+                "flex-col",
+                "relative",
+                frameType === "landscape" ? "w-[2in]" : "w-[4in]",
+                "h-[6in]",
+                "p-[0.125in]",
+                "gap-[0.0625in]",
+                "bg-primary-500",
+            ].join(" ")}
             style={{ backgroundColor: skin?.bgColor }}
         >
             {frameType === "landscape" ? (
                 // 2x6
                 Array.from({ length: PHOTO_COUNT }).map((_, i) => (
-                    <div key={i} className="w-[1.75in] h-[1.25in] bg-white overflow-hidden">
+                    <div
+                        key={i}
+                        className="w-[1.75in] h-[1.25in] bg-white overflow-hidden"
+                    >
                         {photoUrls[i] ? (
-                            <img src={photoUrls[i]} alt={`photo-${i}`} className="w-full h-full object-cover block" />
+                            <img
+                                src={photoUrls[i]}
+                                alt={`photo-${i}`}
+                                className="w-full h-full object-cover block"
+                            />
                         ) : (
                             <div className="w-full h-full bg-white" />
                         )}
@@ -43,7 +59,11 @@ const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
                     {Array.from({ length: PHOTO_COUNT }).map((_, i) => (
                         <div key={i} className="bg-white overflow-hidden">
                             {photoUrls[i] ? (
-                                <img src={photoUrls[i]} alt={`photo-${i}`} className="w-full h-full object-cover block" />
+                                <img
+                                    src={photoUrls[i]}
+                                    alt={`photo-${i}`}
+                                    className="w-full h-full object-cover block"
+                                />
                             ) : (
                                 <div className="w-full h-full bg-white" />
                             )}

@@ -6,9 +6,18 @@ import FrameTypeSelect from "./pages/FrameTypeSelect";
 import PhotoShoot from "./pages/PhotoShoot";
 import PhotoSelect from "./pages/PhotoSelect";
 import Print from "./pages/Print";
+import FrameSkinSelect from "./pages/FrameSkinSelect";
 import PrintProgress from "./pages/PrintProgress";
 import Share from "./pages/Share";
-import { FRAME_TYPE_SELECT, PHOTO_SELECT, PHOTO_SHOOT, PRINT, PRINT_PROGRESS, SHARE } from "./constants/routes";
+import {
+    FRAME_TYPE_SELECT,
+    PHOTO_SELECT,
+    PHOTO_SHOOT,
+    FRAME_SKIN_SELECT,
+    PRINT,
+    PRINT_PROGRESS,
+    SHARE,
+} from "./constants/routes";
 
 function App() {
     return (
@@ -17,11 +26,21 @@ function App() {
                 <Routes>
                     <Route element={<MainLayout />}>
                         <Route index element={<Start />} />
-                        <Route path={FRAME_TYPE_SELECT} element={<FrameTypeSelect />} />
+                        <Route
+                            path={FRAME_TYPE_SELECT}
+                            element={<FrameTypeSelect />}
+                        />
                         <Route path={PHOTO_SHOOT} element={<PhotoShoot />} />
                         <Route path={PHOTO_SELECT} element={<PhotoSelect />} />
+                        <Route
+                            path={FRAME_SKIN_SELECT}
+                            element={<FrameSkinSelect />}
+                        />
                         <Route path={PRINT} element={<Print />} />
-                        <Route path={PRINT_PROGRESS} element={<PrintProgress />} />
+                        <Route
+                            path={PRINT_PROGRESS}
+                            element={<PrintProgress />}
+                        />
                         <Route path={`${SHARE}/:id`} element={<Share />} />
                     </Route>
                 </Routes>
