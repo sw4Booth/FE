@@ -4,7 +4,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useMemo, useEffect } from "react";
-import { PRINT } from "../constants/routes";
+import { FRAME_SKIN_SELECT } from "../constants/routes";
 
 const PHOTO_SELECT_LIMIT = 4;
 
@@ -12,7 +12,6 @@ export default function PhotoSelect() {
     const { capturedPhotos, selectedPhotos, setSelectedPhotos } =
         usePhotoBooth();
     const navigate = useNavigate();
-
 
     const photoUrls = useMemo(() => {
         return capturedPhotos.map((file) => ({
@@ -80,7 +79,13 @@ export default function PhotoSelect() {
                     )}
                 </div>
             </div>
-            <Button size="lg" onClick={() => navigate(PRINT)} disabled={selectedPhotos.length < PHOTO_SELECT_LIMIT}>선택 완료</Button>
+            <Button
+                size="lg"
+                onClick={() => navigate(FRAME_SKIN_SELECT)}
+                disabled={selectedPhotos.length < PHOTO_SELECT_LIMIT}
+            >
+                선택 완료
+            </Button>
         </div>
     );
 }

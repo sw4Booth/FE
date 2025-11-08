@@ -1,12 +1,19 @@
 import { useState } from "react";
-import { PhotoBoothContext, type PhotoBoothContextType } from "./PhotoBoothContext";
-import type { FrameType } from "../types/Frame";
+import {
+    PhotoBoothContext,
+    type PhotoBoothContextType,
+} from "./PhotoBoothContext";
+import type { FrameType, FrameSkin } from "../types/Frame";
+import { DefaultFrame } from "../frames/CloudFrame";
 
-export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
+    children,
+}) => {
     const [frameType, setFrameType] = useState<FrameType | null>(null);
     const [capturedPhotos, setCapturedPhotos] = useState<File[]>([]);
     const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
-    const [backgroundFrame, setBackgroundFrame] = useState<string | null>(null);
+    const [selectedFrameSkin, setSelectedFrameSkin] =
+        useState<FrameSkin | null>(DefaultFrame);
     const [printCount, setPrintCount] = useState(1);
     const [shouldPublishToGuestbook, setPublishToGuestbook] = useState(false);
 
@@ -14,15 +21,15 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         frameType,
         capturedPhotos,
         selectedPhotos,
-        backgroundFrame,
+        selectedFrameSkin,
         printCount,
         shouldPublishToGuestbook,
         setFrameType,
         setCapturedPhotos,
         setSelectedPhotos,
-        setBackgroundFrame,
+        setSelectedFrameSkin,
         setPrintCount,
-        setPublishToGuestbook
+        setPublishToGuestbook,
     };
 
     return (
