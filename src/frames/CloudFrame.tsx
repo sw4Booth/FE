@@ -1,7 +1,5 @@
 import type { FrameSkin } from "../types/Frame";
 
-export const DefaultFrame: FrameSkin = {};
-
 export const CloudFrame: FrameSkin = {
     bgColor: "#b3e5fc",
     decorations: (

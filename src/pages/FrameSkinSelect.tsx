@@ -5,13 +5,14 @@ import { useNavigate } from "react-router";
 import { PRINT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import {
-    DefaultFrame,
     CloudFrame,
     CloudFrame2,
     CloudFrame3,
     CloudFrame4,
     CloudFrame5,
 } from "../frames/CloudFrame";
+import { DefaultFrame } from "../frames/DefaultFrame";
+import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
 
 export default function FrameSkinSelect() {
     const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
@@ -20,6 +21,7 @@ export default function FrameSkinSelect() {
 
     const frameSkins = [
         DefaultFrame,
+        OceanGreedyFrame,
         CloudFrame,
         CloudFrame2,
         CloudFrame3,
