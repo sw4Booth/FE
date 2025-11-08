@@ -13,6 +13,7 @@ import {
 } from "../frames/CloudFrame";
 import { DefaultFrame } from "../frames/DefaultFrame";
 import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
+import { SpaceGreedyFrame } from "../frames/SpaceGreedyFrame";
 
 export default function FrameSkinSelect() {
     const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
@@ -22,6 +23,7 @@ export default function FrameSkinSelect() {
     const frameSkins = [
         DefaultFrame,
         OceanGreedyFrame,
+        SpaceGreedyFrame,
         CloudFrame,
         CloudFrame2,
         CloudFrame3,
