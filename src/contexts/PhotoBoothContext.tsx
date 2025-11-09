@@ -8,6 +8,7 @@ export interface PhotoBoothState {
     selectedFrameSkin: FrameSkin | null;
     printCount: number;
     shouldPublishToGuestbook: boolean;
+    uploadedPhotoId: number | null;
 }
 
 export interface PhotoBoothContextType extends PhotoBoothState {
@@ -17,6 +18,7 @@ export interface PhotoBoothContextType extends PhotoBoothState {
     setSelectedFrameSkin: Dispatch<SetStateAction<FrameSkin | null>>;
     setPrintCount: Dispatch<SetStateAction<number>>;
     setPublishToGuestbook: Dispatch<SetStateAction<boolean>>;
+    setUploadedPhotoId: Dispatch<SetStateAction<number | null>>;
 }
 
 export const PhotoBoothContext = createContext<
