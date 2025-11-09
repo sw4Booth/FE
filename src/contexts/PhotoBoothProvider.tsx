@@ -12,10 +12,10 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     const [frameType, setFrameType] = useState<FrameType | null>(null);
     const [capturedPhotos, setCapturedPhotos] = useState<File[]>([]);
     const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
-    const [selectedFrameSkin, setSelectedFrameSkin] =
-        useState<FrameSkin | null>(DefaultFrame);
+    const [selectedFrameSkin, setSelectedFrameSkin] = useState<FrameSkin | null>(DefaultFrame);
     const [printCount, setPrintCount] = useState(1);
     const [shouldPublishToGuestbook, setPublishToGuestbook] = useState(false);
+    const [uploadedPhotoId, setUploadedPhotoId] = useState<number | null>(null);
 
     const value: PhotoBoothContextType = {
         frameType,
@@ -24,12 +24,14 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
         selectedFrameSkin,
         printCount,
         shouldPublishToGuestbook,
+        uploadedPhotoId,
         setFrameType,
         setCapturedPhotos,
         setSelectedPhotos,
         setSelectedFrameSkin,
         setPrintCount,
         setPublishToGuestbook,
+        setUploadedPhotoId
     };
 
     return (
