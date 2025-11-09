@@ -4,19 +4,21 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PRINT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import {
-    DefaultFrame,
-    CloudFrame,
-    CloudFrame2,
-    CloudFrame3,
-} from "../frames/CloudFrame";
+import { CloudFrame, CloudFrame2, CloudFrame3 } from "../frames/CloudFrame";
+import { DefaultFrame } from "../frames/DefaultFrame";
+import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
+import { SpaceGreedyFrame } from "../frames/SpaceGreedyFrame";
 import { api } from "../libs/api";
 import { API_PHOTOS_UPLOAD } from "../constants/api";
 import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
 
 export default function FrameSkinSelect() {
-    const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin, setUploadedPhotoId } =
-        usePhotoBooth();
+    const {
+        selectedPhotos,
+        selectedFrameSkin,
+        setSelectedFrameSkin,
+        setUploadedPhotoId,
+    } = usePhotoBooth();
     const navigate = useNavigate();
 
     const frameSkins = [
@@ -30,7 +32,10 @@ export default function FrameSkinSelect() {
 
     const handleFinishSelect = async () => {
         try {
-            const { data } = await api.post<PhotoUploadResponse, PhotoUploadPayload>(API_PHOTOS_UPLOAD, { file: "" });
+            const { data } = await api.post<
+                PhotoUploadResponse,
+                PhotoUploadPayload
+            >(API_PHOTOS_UPLOAD, { file: "" });
 
             setUploadedPhotoId(data.id);
         } catch (e) {
@@ -70,7 +75,9 @@ export default function FrameSkinSelect() {
                     ))}
                 </div>
             </div>
-            <Button size="lg" onClick={handleFinishSelect}>선택 완료</Button>
+            <Button size="lg" onClick={handleFinishSelect}>
+                선택 완료
+            </Button>
         </div>
     );
 }
