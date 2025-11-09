@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { PRINT_PROGRESS, START } from "../constants/routes";
 import { api } from "../libs/api";
 import { API_GUESTBOOK, API_SHARE_CREATE } from "../constants/api";
-import { type GuestbookCreateResponse, type GuestbookCreatePayload, ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
+import { type GuestbookCreateResponse, type GuestbookCreatePayload, type ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
 
 const MAX_PRINT_COUNT = 4;
 
