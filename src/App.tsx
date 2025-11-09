@@ -17,6 +17,7 @@ import {
     PRINT,
     PRINT_PROGRESS,
     SHARE,
+    START,
 } from "./constants/routes";
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route element={<MainLayout />}>
-                        <Route index element={<Start />} />
+                        <Route path={START} element={<Start />} />
                         <Route
                             path={FRAME_TYPE_SELECT}
                             element={<FrameTypeSelect />}

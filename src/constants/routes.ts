@@ -1,3 +1,4 @@
+export const START = "/";
 export const FRAME_TYPE_SELECT = "/frame-type-select";
 export const PHOTO_SHOOT = "/photo-shoot";
 export const PHOTO_SELECT = "/photo-select";

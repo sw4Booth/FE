@@ -12,9 +12,12 @@ import {
     CloudFrame4,
     CloudFrame5,
 } from "../frames/CloudFrame";
+import { api } from "../libs/api";
+import { API_PHOTOS_UPLOAD } from "../constants/api";
+import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
 
 export default function FrameSkinSelect() {
-    const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
+    const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin, setUploadedPhotoId } =
         usePhotoBooth();
     const navigate = useNavigate();
 
@@ -26,6 +29,18 @@ export default function FrameSkinSelect() {
         CloudFrame4,
         CloudFrame5,
     ];
+
+    const handleFinishSelect = async () => {
+        try {
+            const { data } = await api.post<PhotoUploadResponse, PhotoUploadPayload>(API_PHOTOS_UPLOAD, { file: "" });
+
+            setUploadedPhotoId(data.id);
+        } catch (e) {
+            console.error(e);
+        }
+
+        navigate(PRINT);
+    };
 
     return (
         <div className="flex flex-col items-center w-full">
@@ -57,9 +72,7 @@ export default function FrameSkinSelect() {
                     ))}
                 </div>
             </div>
-            <Button size="lg" onClick={() => navigate(PRINT)}>
-                선택 완료
-            </Button>
+            <Button size="lg" onClick={handleFinishSelect}>선택 완료</Button>
         </div>
     );
 }
