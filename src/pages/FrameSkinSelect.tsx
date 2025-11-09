@@ -9,8 +9,6 @@ import {
     CloudFrame,
     CloudFrame2,
     CloudFrame3,
-    CloudFrame4,
-    CloudFrame5,
 } from "../frames/CloudFrame";
 import { api } from "../libs/api";
 import { API_PHOTOS_UPLOAD } from "../constants/api";
@@ -23,11 +21,11 @@ export default function FrameSkinSelect() {
 
     const frameSkins = [
         DefaultFrame,
+        OceanGreedyFrame,
+        SpaceGreedyFrame,
         CloudFrame,
         CloudFrame2,
         CloudFrame3,
-        CloudFrame4,
-        CloudFrame5,
     ];
 
     const handleFinishSelect = async () => {
