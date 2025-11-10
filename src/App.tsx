@@ -10,6 +10,7 @@ import FrameSkinSelect from "./pages/FrameSkinSelect";
 import PrintProgress from "./pages/PrintProgress";
 import Share from "./pages/Share";
 import {
+    START,
     FRAME_TYPE_SELECT,
     PHOTO_SELECT,
     PHOTO_SHOOT,
@@ -17,8 +18,9 @@ import {
     PRINT,
     PRINT_PROGRESS,
     SHARE,
-    START,
+    GUEST_BOOK
 } from "./constants/routes";
+import GuestBook from "./pages/GuestBook";
 
 function App() {
     return (
@@ -44,6 +46,7 @@ function App() {
                         />
                         <Route path={`${SHARE}/:id`} element={<Share />} />
                     </Route>
+                    <Route path={GUEST_BOOK} element={<GuestBook />} />
                 </Routes>
             </BrowserRouter>
         </PhotoBoothProvider>
