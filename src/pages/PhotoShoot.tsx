@@ -50,7 +50,8 @@ export default function PhotoShoot() {
                         if (newCount >= TOTAL_SHOTS) {
                             clearInterval(timer);
                             stopCamera();
-                            setTimeout(() => navigate(PHOTO_SELECT), 500);
+                            navigate(PHOTO_SELECT);
+                            // setTimeout(() => navigate(PHOTO_SELECT), 500);
                         }
                         return newCount;
                     });
