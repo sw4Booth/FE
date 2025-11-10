@@ -14,7 +14,7 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
     const [selectedFrameSkin, setSelectedFrameSkin] = useState<FrameSkin | null>(DefaultFrame);
     const [printCount, setPrintCount] = useState(1);
-    const [shouldPublishToGuestbook, setPublishToGuestbook] = useState(false);
+    const [shouldPublishToGuestbook, setPublishToGuestbook] = useState(true);
     const [uploadedPhotoId, setUploadedPhotoId] = useState<number | null>(null);
 
     const value: PhotoBoothContextType = {

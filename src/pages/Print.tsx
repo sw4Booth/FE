@@ -51,12 +51,9 @@ export default function Print() {
         }
     };
 
-    useEffect(() => {
-        if (!uploadedPhotoId) {
-            // TODO: add toast?
-            navigate(START);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!uploadedPhotoId) navigate(START);
+    // }, []);
 
     return (
         <div className="flex flex-col w-full h-full items-center gap-6">
