@@ -13,6 +13,8 @@ export default function PhotoShoot() {
     const { setCapturedPhotos } = usePhotoBooth();
     const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
     const navigate = useNavigate();
+    const [countdown, setCountdown] = useState<number | null>(null);
+    const [flash, setFlash] = useState(false);
 
     useEffect(() => {
         async function setupCamera() {
@@ -35,6 +37,11 @@ export default function PhotoShoot() {
                 timeLeft -= 1000;
                 setRemainingTime(timeLeft);
 
+                if (timeLeft <= 3000 && timeLeft > 0) {
+                    const seconds = Math.ceil(timeLeft / 1000);
+                    setCountdown(seconds);
+                }
+
                 if (timeLeft <= 0) {
                     takePhoto();
                     setCurrentCount((prev) => {
@@ -42,13 +49,14 @@ export default function PhotoShoot() {
                         if (newCount >= TOTAL_SHOTS) {
                             clearInterval(timer);
                             stopCamera();
-                            setTimeout(() => navigate(PHOTO_SELECT), 500);
+                            navigate(PHOTO_SELECT);
                         }
                         return newCount;
                     });
 
                     timeLeft = SHOOT_INTERVAL;
                     setRemainingTime(SHOOT_INTERVAL);
+                    setCountdown(null);
                 }
             }, 1000);
         }
@@ -69,6 +77,9 @@ export default function PhotoShoot() {
     }, [navigate]);
 
     const takePhoto = () => {
+        setFlash(true);
+        setTimeout(() => setFlash(false), 150);
+
         const video = videoRef.current;
         if (!video) return;
 
@@ -112,6 +123,16 @@ export default function PhotoShoot() {
                     playsInline
                     className="w-full h-full object-cover -scale-x-100"
                 />
+
+                {flash && (
+                    <div className="absolute inset-0 bg-white animate-flash" />
+                )}
+
+                {countdown && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white text-9xl font-extrabold animate-ping-slow">
+                        {countdown}
+                    </div>
+                )}
             </div>
         </div>
     );
