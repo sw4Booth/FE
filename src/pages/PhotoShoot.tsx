@@ -13,6 +13,7 @@ export default function PhotoShoot() {
     const { setCapturedPhotos } = usePhotoBooth();
     const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
     const navigate = useNavigate();
+    const [countdown, setCountdown] = useState<number | null>(null);
 
     useEffect(() => {
         async function setupCamera() {
@@ -34,6 +35,13 @@ export default function PhotoShoot() {
             const timer = setInterval(() => {
                 timeLeft -= 1000;
                 setRemainingTime(timeLeft);
+
+                if (timeLeft <= 3000 && timeLeft > 0) {
+                    const seconds = Math.ceil(timeLeft / 1000);
+                    setCountdown(seconds);
+
+                    setTimeout(() => setCountdown(null), 500);
+                }
 
                 if (timeLeft <= 0) {
                     takePhoto();
@@ -112,6 +120,12 @@ export default function PhotoShoot() {
                     playsInline
                     className="w-full h-full object-cover -scale-x-100"
                 />
+
+                {countdown && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white text-9xl font-extrabold animate-ping-slow">
+                        {countdown}
+                    </div>
+                )}
             </div>
         </div>
     );
