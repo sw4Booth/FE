@@ -40,8 +40,6 @@ export default function PhotoShoot() {
                 if (timeLeft <= 3000 && timeLeft > 0) {
                     const seconds = Math.ceil(timeLeft / 1000);
                     setCountdown(seconds);
-
-                    setTimeout(() => setCountdown(null), 500);
                 }
 
                 if (timeLeft <= 0) {
@@ -58,6 +56,7 @@ export default function PhotoShoot() {
 
                     timeLeft = SHOOT_INTERVAL;
                     setRemainingTime(SHOOT_INTERVAL);
+                    setCountdown(null);
                 }
             }, 1000);
         }
