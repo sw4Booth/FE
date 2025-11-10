@@ -14,6 +14,7 @@ export default function PhotoShoot() {
     const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
     const navigate = useNavigate();
     const [countdown, setCountdown] = useState<number | null>(null);
+    const [flash, setFlash] = useState(false);
 
     useEffect(() => {
         async function setupCamera() {
@@ -51,7 +52,6 @@ export default function PhotoShoot() {
                             clearInterval(timer);
                             stopCamera();
                             navigate(PHOTO_SELECT);
-                            // setTimeout(() => navigate(PHOTO_SELECT), 500);
                         }
                         return newCount;
                     });
@@ -78,6 +78,9 @@ export default function PhotoShoot() {
     }, [navigate]);
 
     const takePhoto = () => {
+        setFlash(true);
+        setTimeout(() => setFlash(false), 150);
+
         const video = videoRef.current;
         if (!video) return;
 
@@ -121,6 +124,10 @@ export default function PhotoShoot() {
                     playsInline
                     className="w-full h-full object-cover -scale-x-100"
                 />
+
+                {flash && (
+                    <div className="absolute inset-0 bg-white animate-flash" />
+                )}
 
                 {countdown && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white text-9xl font-extrabold animate-ping-slow">
