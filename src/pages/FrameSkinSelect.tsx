@@ -4,28 +4,46 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PRINT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import {
-    DefaultFrame,
-    CloudFrame,
-    CloudFrame2,
-    CloudFrame3,
-    CloudFrame4,
-    CloudFrame5,
-} from "../frames/CloudFrame";
+import { CloudFrame, CloudFrame2, CloudFrame3 } from "../frames/CloudFrame";
+import { DefaultFrame } from "../frames/DefaultFrame";
+import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
+import { SpaceGreedyFrame } from "../frames/SpaceGreedyFrame";
+import { api } from "../libs/api";
+import { API_PHOTOS_UPLOAD } from "../constants/api";
+import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
 
 export default function FrameSkinSelect() {
-    const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
-        usePhotoBooth();
+    const {
+        selectedPhotos,
+        selectedFrameSkin,
+        setSelectedFrameSkin,
+        setUploadedPhotoId,
+    } = usePhotoBooth();
     const navigate = useNavigate();
 
     const frameSkins = [
         DefaultFrame,
+        OceanGreedyFrame,
+        SpaceGreedyFrame,
         CloudFrame,
         CloudFrame2,
         CloudFrame3,
-        CloudFrame4,
-        CloudFrame5,
     ];
+
+    const handleFinishSelect = async () => {
+        try {
+            const { data } = await api.post<
+                PhotoUploadResponse,
+                PhotoUploadPayload
+            >(API_PHOTOS_UPLOAD, { file: "" });
+
+            setUploadedPhotoId(data.id);
+        } catch (e) {
+            console.error(e);
+        }
+
+        navigate(PRINT);
+    };
 
     return (
         <div className="flex flex-col items-center w-full">
@@ -57,7 +75,7 @@ export default function FrameSkinSelect() {
                     ))}
                 </div>
             </div>
-            <Button size="lg" onClick={() => navigate(PRINT)}>
+            <Button size="lg" onClick={handleFinishSelect}>
                 선택 완료
             </Button>
         </div>

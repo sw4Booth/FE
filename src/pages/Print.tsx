@@ -3,12 +3,15 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useNavigate } from "react-router";
-import { PRINT_PROGRESS } from "../constants/routes";
+import { PRINT_PROGRESS, START } from "../constants/routes";
+import { api } from "../libs/api";
+import { API_GUESTBOOK, API_SHARE_CREATE } from "../constants/api";
+import { type GuestbookCreateResponse, type GuestbookCreatePayload, type ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
 
 const MAX_PRINT_COUNT = 4;
 
 export default function Print() {
-    const { printCount, shouldPublishToGuestbook, setPrintCount, setPublishToGuestbook } = usePhotoBooth();
+    const { printCount, shouldPublishToGuestbook, uploadedPhotoId, setPrintCount, setPublishToGuestbook } = usePhotoBooth();
     const navigate = useNavigate();
 
     const handleCountDecrementClick = () => {
@@ -23,10 +26,37 @@ export default function Print() {
         setPublishToGuestbook(!shouldPublishToGuestbook);
     };
 
+    const handlePrintClick = async () => {
+        if (shouldPublishToGuestbook) await publishToGuestbook();
+
+        const { data } = await api.post<ShareLinkCreateResponse, ShareLinkCreatePayload>(API_SHARE_CREATE, { photoId: uploadedPhotoId });
+
+        // 1. get qr image
+        // 2. get image
+        // 3. merge image with qr image
+        // 4. print
+
+        navigate(PRINT_PROGRESS);
+    };
+
+    const publishToGuestbook = async () => {
+        try {
+            const response = await api.post<GuestbookCreateResponse, GuestbookCreatePayload>(API_GUESTBOOK, { photoId: uploadedPhotoId, message: "" });
+
+            if (response.code === 201) {
+                console.log(response.data);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     useEffect(() => {
-        console.log("printCount:", printCount);
-        console.log("shouldPublishToGuestbook:", shouldPublishToGuestbook);
-    }, [printCount, shouldPublishToGuestbook]);
+        if (!uploadedPhotoId) {
+            // TODO: add toast?
+            navigate(START);
+        }
+    }, []);
 
     return (
         <div className="flex flex-col w-full h-full items-center gap-6">
@@ -50,7 +80,7 @@ export default function Print() {
                     <span className="text-lg font-semibold">방명록에 등록하기</span>
                 </label>
             </div>
-            <Button size="lg" onClick={() => navigate(PRINT_PROGRESS)}>출력하기</Button>
+            <Button size="lg" onClick={handlePrintClick}>출력하기</Button>
         </div>
     );
 }

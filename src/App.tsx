@@ -10,6 +10,7 @@ import FrameSkinSelect from "./pages/FrameSkinSelect";
 import PrintProgress from "./pages/PrintProgress";
 import Share from "./pages/Share";
 import {
+    START,
     FRAME_TYPE_SELECT,
     PHOTO_SELECT,
     PHOTO_SHOOT,
@@ -17,7 +18,7 @@ import {
     PRINT,
     PRINT_PROGRESS,
     SHARE,
-    GUEST_BOOK,
+    GUEST_BOOK
 } from "./constants/routes";
 import GuestBook from "./pages/GuestBook";
 
@@ -27,7 +28,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route element={<MainLayout />}>
-                        <Route index element={<Start />} />
+                        <Route path={START} element={<Start />} />
                         <Route
                             path={FRAME_TYPE_SELECT}
                             element={<FrameTypeSelect />}
