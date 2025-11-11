@@ -120,7 +120,8 @@ export default function Print() {
             </div>
             {mergedDataUrl && (
                 <div className="hidden print:flex justify-center items-center w-full h-full">
-                    <img src={mergedDataUrl} className="print:w-[100mm] print:h-[148mm] print:object-contain" />
+                    <img src={mergedDataUrl} className="print:w-[102mm] print:h-[154mm] print:object-contain" />
+                    <img src={mergedDataUrl} className="print:w-[102mm] print:h-[154mm] print:object-contain" />
                 </div>
             )}
         </>
