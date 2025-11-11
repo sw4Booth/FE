@@ -5,17 +5,23 @@ export interface PhotoUploadResponse {
     imageUrl: string;
 }
 
-export interface GuestbookCreatePayload {
-    photoId: number;
-    message: string;
-}
-
-export interface GuestbookCreateResponse {
+export interface Guestbook {
     id: number;
     imageUrl: string;
     message: string;
     createdAt: string;
 }
+
+export interface GuestbookResponse {
+    content: Guestbook[];
+}
+
+export interface GuestbookCreatePayload {
+    photoId: number;
+    message: string;
+}
+
+export type GuestbookCreateResponse = Guestbook;
 
 export interface ShareLinkCreatePayload {
     photoId: number;
