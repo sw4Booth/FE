@@ -3,7 +3,6 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import { useMemo, useEffect } from "react";
 import { FRAME_SKIN_SELECT } from "../constants/routes";
 
 const PHOTO_SELECT_LIMIT = 4;
@@ -13,35 +12,11 @@ export default function PhotoSelect() {
         usePhotoBooth();
     const navigate = useNavigate();
 
-    const photoUrls = useMemo(() => {
-        return capturedPhotos.map((file) => ({
-            file,
-            url: URL.createObjectURL(file),
-        }));
-    }, [capturedPhotos]);
-
-    useEffect(() => {
-        return () => {
-            photoUrls.forEach(({ url }) => URL.revokeObjectURL(url));
-        };
-    }, [photoUrls]);
-
-    const handlePhotoClick = (photo: File) => {
-        const isExists = selectedPhotos.some(
-            (p) =>
-                p.name === photo.name && p.lastModified === photo.lastModified
-        );
+    const handlePhotoClick = (photo: string) => {
+        const isExists = selectedPhotos.includes(photo);
 
         if (isExists) {
-            setSelectedPhotos((prev) =>
-                prev.filter(
-                    (p) =>
-                        !(
-                            p.name === photo.name &&
-                            p.lastModified === photo.lastModified
-                        )
-                )
-            );
+            setSelectedPhotos((prev) => prev.filter((p) => p !== photo));
         } else if (selectedPhotos.length < PHOTO_SELECT_LIMIT) {
             setSelectedPhotos((prev) => [...prev, photo]);
         }
@@ -55,20 +30,17 @@ export default function PhotoSelect() {
                     <PhotoFrame frameType="landscape" photos={selectedPhotos} />
                 </div>
                 <div className="w-[70%] my-auto mx-auto mr-20">
-                    {photoUrls.length > 0 && (
+                    {capturedPhotos.length > 0 && (
                         <div className="grid grid-cols-4">
-                            {photoUrls.map(({ file, url }, i) => {
-                                const isSelected = selectedPhotos.some(
-                                    (p) =>
-                                        p.name === file.name &&
-                                        p.lastModified === file.lastModified
-                                );
+                            {capturedPhotos.map((photo, i) => {
+                                const isSelected = selectedPhotos.includes(photo);
+
                                 return (
                                     <img
                                         key={i}
-                                        src={url}
+                                        src={photo}
                                         alt={`photo-${i}`}
-                                        onClick={() => handlePhotoClick(file)}
+                                        onClick={() => handlePhotoClick(photo)}
                                         data-selected={isSelected}
                                         className="aspect-[7/5] object-cover p-0.5 cursor-pointer transition-all duration-200 
                                         hover:opacity-80 data-[selected=true]:opacity-50"

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { PHOTO_SELECT } from "../constants/routes";
 
 const TOTAL_SHOTS = 8;
-const SHOOT_INTERVAL = 7000;
+const SHOOT_INTERVAL = 3000;
 
 export default function PhotoShoot() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -92,13 +92,9 @@ export default function PhotoShoot() {
         ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        canvas.toBlob((blob) => {
-            if (!blob) return;
-            const file = new File([blob], `photo-${Date.now()}.webp`, {
-                type: "image/webp",
-            });
-            setCapturedPhotos((prev) => [...prev, file]);
-        }, "image/webp");
+        const dataUrl = canvas.toDataURL("image/webp");
+
+        setCapturedPhotos((prev) => [...prev, dataUrl]);
     };
 
     return (

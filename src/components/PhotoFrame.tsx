@@ -1,28 +1,18 @@
-import { useEffect, useMemo } from "react";
+import { forwardRef } from "react";
 import type { FrameType, FrameSkin } from "../types/Frame";
 
 interface Props {
     frameType: FrameType;
-    photos?: File[];
+    photos?: string[];
     skin?: FrameSkin;
 }
 
 const PHOTO_COUNT = 4;
 
-const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
-    const photoUrls = useMemo(() => {
-        return photos.map((file) => URL.createObjectURL(file));
-    }, [photos]);
-
-    // cleanup
-    useEffect(() => {
-        return () => {
-            photoUrls.forEach((url) => URL.revokeObjectURL(url));
-        };
-    }, [photoUrls]);
-
+const PhotoFrame = forwardRef<HTMLDivElement, Props>(({ frameType, photos = [], skin }, ref) => {
     return (
         <div
+            ref={ref}
             className={[
                 "flex",
                 "flex-col",
@@ -42,9 +32,9 @@ const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
                         key={i}
                         className="w-[1.75in] h-[1.25in] bg-white overflow-hidden"
                     >
-                        {photoUrls[i] ? (
+                        {photos[i] ? (
                             <img
-                                src={photoUrls[i]}
+                                src={photos[i]}
                                 alt={`photo-${i}`}
                                 className="w-full h-full object-cover block"
                             />
@@ -58,9 +48,9 @@ const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
                 <div className="grid grid-cols-[repeat(2,1.84375in)] grid-rows-[repeat(2,2.6875in)] gap-[0.0625in]">
                     {Array.from({ length: PHOTO_COUNT }).map((_, i) => (
                         <div key={i} className="bg-white overflow-hidden">
-                            {photoUrls[i] ? (
+                            {photos[i] ? (
                                 <img
-                                    src={photoUrls[i]}
+                                    src={photos[i]}
                                     alt={`photo-${i}`}
                                     className="w-full h-full object-cover block"
                                 />
@@ -74,6 +64,6 @@ const PhotoFrame = ({ frameType, photos = [], skin }: Props) => {
             {skin?.decorations}
         </div>
     );
-};
+});
 
 export default PhotoFrame;
