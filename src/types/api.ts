@@ -1,6 +1,4 @@
-export interface PhotoUploadPayload {
-    file: string;
-}
+export type PhotoUploadPayload = FormData;
 
 export interface PhotoUploadResponse {
     id: number;
