@@ -1,10 +1,19 @@
-export interface PhotoUploadPayload {
-    file: string;
-}
+export type PhotoUploadPayload = FormData;
 
 export interface PhotoUploadResponse {
     id: number;
     imageUrl: string;
+}
+
+export interface Guestbook {
+    id: number;
+    imageUrl: string;
+    message: string;
+    createdAt: string;
+}
+
+export interface GuestbookResponse {
+    content: Guestbook[];
 }
 
 export interface GuestbookCreatePayload {
@@ -12,12 +21,7 @@ export interface GuestbookCreatePayload {
     message: string;
 }
 
-export interface GuestbookCreateResponse {
-    id: number;
-    imageUrl: string;
-    message: string;
-    createdAt: string;
-}
+export type GuestbookCreateResponse = Guestbook;
 
 export interface ShareLinkCreatePayload {
     photoId: number;

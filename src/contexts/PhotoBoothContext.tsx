@@ -3,22 +3,22 @@ import type { FrameSkin, FrameType } from "../types/Frame";
 
 export interface PhotoBoothState {
     frameType: FrameType | null;
-    capturedPhotos: File[];
-    selectedPhotos: File[];
+    capturedPhotos: string[];
+    selectedPhotos: string[];
     selectedFrameSkin: FrameSkin | null;
     printCount: number;
     shouldPublishToGuestbook: boolean;
-    uploadedPhotoId: number | null;
+    uploadedPhotoId: number;
 }
 
 export interface PhotoBoothContextType extends PhotoBoothState {
     setFrameType: Dispatch<SetStateAction<FrameType | null>>;
-    setCapturedPhotos: Dispatch<SetStateAction<File[]>>;
-    setSelectedPhotos: Dispatch<SetStateAction<File[]>>;
+    setCapturedPhotos: Dispatch<SetStateAction<string[]>>;
+    setSelectedPhotos: Dispatch<SetStateAction<string[]>>;
     setSelectedFrameSkin: Dispatch<SetStateAction<FrameSkin | null>>;
     setPrintCount: Dispatch<SetStateAction<number>>;
     setPublishToGuestbook: Dispatch<SetStateAction<boolean>>;
-    setUploadedPhotoId: Dispatch<SetStateAction<number | null>>;
+    setUploadedPhotoId: Dispatch<SetStateAction<number>>;
 }
 
 export const PhotoBoothContext = createContext<

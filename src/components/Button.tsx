@@ -29,7 +29,7 @@ const Button = ({ children, variant = "solid", color = "primary", size = "md", d
         lg: "px-12 py-4 text-lg rounded-full",
     };
 
-    const baseStyles = "font-medium text-center cursor-pointer";
+    const baseStyles = "font-medium text-center cursor-pointer whitespace-nowrap";
 
     return (
         <button className={[baseStyles, sizeStyles[size], colorStyles[color][variant], disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""].join(" ")} onClick={onClick}>{children}</button>

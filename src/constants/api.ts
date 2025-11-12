@@ -1,4 +1,4 @@
-export const API_BASEURL = "";
+export const API_BASEURL = import.meta.env.VITE_API_BASEURL;
 
 export const API_PHOTOS = API_BASEURL + "/photos";
 export const API_PHOTOS_UPLOAD = API_PHOTOS + "/upload";
