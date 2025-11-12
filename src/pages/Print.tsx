@@ -43,8 +43,6 @@ export default function Print() {
 
             const merged = await mergeImageWithQR(data.imageUrl, data.qrImageBase64);
 
-            console.log(merged);
-
             setMergedDataUrl(merged);
         } catch (e) {
             console.error(e);
@@ -64,7 +62,7 @@ export default function Print() {
         ctx.drawImage(photo, 0, 0, canvas.width, canvas.height);
 
         // QR 오른쪽 아래 배치
-        const qrSize = canvas.width * 0.15;
+        const qrSize = canvas.width * 0.2;
         const qrX = canvas.width - qrSize - 24;
         const qrY = canvas.height - qrSize - 24;
 
