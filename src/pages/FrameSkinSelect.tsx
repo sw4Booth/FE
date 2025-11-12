@@ -113,7 +113,7 @@ export default function FrameSkinSelect() {
                             key={idx}
                             onClick={() => setSelectedFrameSkin(skin)}
                             data-selected={selectedFrameSkin === skin}
-                            className="cursor-pointer transition-all duration-200 
+                            className="relative cursor-pointer transition-all duration-200 
                             hover:opacity-80 data-[selected=true]:opacity-50"
                         >
                             <PhotoFrame
@@ -121,6 +121,15 @@ export default function FrameSkinSelect() {
                                 photos={[]}
                                 skin={skin}
                             />
+                            {selectedFrameSkin === skin && (
+                                <div className="absolute inset-0 flex items-center justify-center z-10 rounded-md">
+                                    <img
+                                        src="/assets/check.svg"
+                                        alt="check"
+                                        className="w-25 h-25"
+                                    />
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
