@@ -3,6 +3,7 @@
 @theme {
     --font-pretendard: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
+    /* SW */
     --color-primary-50: #f3f5fb;
     --color-primary-100: #e4e9f5;
     --color-primary-200: #ced8ef;
@@ -15,8 +16,20 @@
     --color-primary-900: #39406f;
     --color-primary-950: #262945;
 
+    /* Greedy */
+    --color-primary-50: #d0fbe6;
+    --color-primary-100: #a4f6d2;
+    --color-primary-200: #6aebbb;
+    --color-primary-300: #2fd89e;
+    --color-primary-400: #0abf87;
+    --color-primary-500: #009b6f;
+    --color-primary-600: #007355;
+    --color-primary-700: #036249;
+    --color-primary-800: #04503e;
+    --color-primary-900: #012d24;
+
     --color-white: #ffffff;
-    
+
     --color-gray-50: #f6f6f6;
     --color-gray-100: #e7e7e7;
     --color-gray-200: #d1d1d1;
