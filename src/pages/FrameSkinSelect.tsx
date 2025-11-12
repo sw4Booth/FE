@@ -4,8 +4,9 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PRINT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import { CloudFrame, CloudFrame2, CloudFrame3 } from "../frames/CloudFrame";
 import { DefaultFrame } from "../frames/DefaultFrame";
+import { BlackGreedyFrame } from "../frames/BlackGreedyFrame";
+import { PotatoGreedyFrame } from "../frames/PotatoGreedyFrame";
 import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
 import { SpaceGreedyFrame } from "../frames/SpaceGreedyFrame";
 import { api } from "../libs/api";
@@ -16,11 +17,10 @@ import html2canvas from "html2canvas";
 
 const frameSkins = [
     DefaultFrame,
+    BlackGreedyFrame,
+    PotatoGreedyFrame,
     OceanGreedyFrame,
     SpaceGreedyFrame,
-    CloudFrame,
-    CloudFrame2,
-    CloudFrame3,
 ];
 
 export default function FrameSkinSelect() {
@@ -60,14 +60,24 @@ export default function FrameSkinSelect() {
 
                 // FormData에 담기
                 const formData = new FormData();
-                formData.append("file", new File([blob], "image.png", { type: "image/png" }));
+                formData.append(
+                    "file",
+                    new File([blob], "image.png", { type: "image/png" })
+                );
 
                 // 서버 업로드
                 try {
-                    const { data } = await api.post<PhotoUploadResponse, PhotoUploadPayload>(API_PHOTOS_UPLOAD, formData);
+                    const { data } = await api.post<
+                        PhotoUploadResponse,
+                        PhotoUploadPayload
+                    >(API_PHOTOS_UPLOAD, formData);
                     setUploadedPhotoId(data.id);
 
-                    console.log("Upload success with id:", data.id, data.imageUrl);
+                    console.log(
+                        "Upload success with id:",
+                        data.id,
+                        data.imageUrl
+                    );
                 } catch (e) {
                     console.error("Upload failed:", e);
                 }
@@ -78,8 +88,6 @@ export default function FrameSkinSelect() {
                 link.href = URL.createObjectURL(blob);
                 link.click();
             });
-
-
         } catch (e) {
             console.error("Failed to generate image:", e);
         } finally {
@@ -99,7 +107,7 @@ export default function FrameSkinSelect() {
                     />
                 </div>
 
-                <div className="w-[80%] my-auto mx-auto mr-20 scale-80 flex justify-start gap-8 overflow-x-auto overflow-y-hidden">
+                <div className="w-[80%] my-auto mx-auto scale-80 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}
@@ -117,12 +125,17 @@ export default function FrameSkinSelect() {
                     ))}
                 </div>
             </div>
-            <Button size="lg" onClick={handleFinishSelect}>선택 완료</Button>
-            <div ref={frameRef} style={{
-                position: "absolute",
-                top: "-9999px",
-                left: "-9999px",
-            }}>
+            <Button size="lg" onClick={handleFinishSelect}>
+                선택 완료
+            </Button>
+            <div
+                ref={frameRef}
+                style={{
+                    position: "absolute",
+                    top: "-9999px",
+                    left: "-9999px",
+                }}
+            >
                 <PhotoFrame
                     frameType="landscape"
                     photos={selectedPhotos}

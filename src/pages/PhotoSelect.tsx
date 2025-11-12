@@ -33,7 +33,8 @@ export default function PhotoSelect() {
                     {capturedPhotos.length > 0 && (
                         <div className="grid grid-cols-4">
                             {capturedPhotos.map((photo, i) => {
-                                const isSelected = selectedPhotos.includes(photo);
+                                const isSelected =
+                                    selectedPhotos.includes(photo);
 
                                 return (
                                     <img
