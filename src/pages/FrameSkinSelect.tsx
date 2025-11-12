@@ -34,17 +34,26 @@ export default function FrameSkinSelect() {
     const navigate = useNavigate();
 
     const handleFinishSelect = async () => {
+        const frameSrc = frameRef.current;
+        if (!frameSrc) {
+            console.warn("No frameRef available for capture.");
+            return;
+        }
+
+        const clone = frameSrc.cloneNode(true) as HTMLElement;
+        document.body.appendChild(clone);
+
         navigate(PRINT);
 
         // 이미지 업로드
-        generateAndUploadImage();
+        generateAndUploadImage(clone);
     };
 
-    const generateAndUploadImage = async () => {
+    const generateAndUploadImage = async (element: HTMLElement) => {
         if (!frameRef.current) return;
 
         try {
-            const canvas = await html2canvas(frameRef.current, { scale: 2 }); // TODO: 인쇄 상태에 따라 scale(DPI) 수정
+            const canvas = await html2canvas(element, { scale: 2 }); // TODO: 인쇄 상태에 따라 scale(DPI) 수정
 
             canvas.toBlob(async (blob) => {
                 if (!blob) return;
@@ -73,6 +82,8 @@ export default function FrameSkinSelect() {
 
         } catch (e) {
             console.error("Failed to generate image:", e);
+        } finally {
+            element.remove();
         }
     };
 
