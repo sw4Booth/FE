@@ -83,10 +83,10 @@ export default function FrameSkinSelect() {
                 }
 
                 // 다운로드 테스트
-                const link = document.createElement("a");
-                link.download = "photobooth.png";
-                link.href = URL.createObjectURL(blob);
-                link.click();
+                // const link = document.createElement("a");
+                // link.download = "photobooth.png";
+                // link.href = URL.createObjectURL(blob);
+                // link.click();
             });
         } catch (e) {
             console.error("Failed to generate image:", e);
