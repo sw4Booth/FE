@@ -4,6 +4,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { FRAME_SKIN_SELECT } from "../constants/routes";
+import { DefaultFrame } from "../frames/DefaultFrame";
 
 const PHOTO_SELECT_LIMIT = 4;
 
@@ -27,7 +28,11 @@ export default function PhotoSelect() {
             <Heading>사진을 선택해주세요</Heading>
             <div className="flex w-full justify-center mt-10">
                 <div className="mx-auto my-auto ml-20">
-                    <PhotoFrame frameType="landscape" photos={selectedPhotos} />
+                    <PhotoFrame
+                        frameType="landscape"
+                        photos={selectedPhotos}
+                        skin={DefaultFrame}
+                    />
                 </div>
                 <div className="w-[70%] my-auto mx-auto mr-20">
                     {capturedPhotos.length > 0 && (
