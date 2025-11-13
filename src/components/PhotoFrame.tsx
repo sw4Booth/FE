@@ -21,7 +21,7 @@ const PhotoFrame = forwardRef<HTMLDivElement, Props>(({ frameType, photos = [], 
                 "h-[6in]",
                 "p-[0.125in]",
                 "gap-[0.0625in]",
-                "bg-primary-500",
+                "bg-primary-600",
             ].join(" ")}
             style={{ backgroundColor: skin?.bgColor }}
         >

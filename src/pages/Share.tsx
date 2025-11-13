@@ -6,6 +6,7 @@ import { API_SHARE } from "../constants/api";
 import { api } from "../libs/api";
 import { type ShareLinkResponse } from "../types/api";
 import axios from "axios";
+import { SITE_BRANDING } from "../constants/constants";
 
 export default function Share() {
     const { id } = useParams();
@@ -62,7 +63,7 @@ export default function Share() {
 
     return (
         <div className="flex flex-col w-full h-full min-h-0 items-center gap-6">
-            <Heading>로고 영역</Heading>
+            <Heading>{SITE_BRANDING}</Heading>
             <div className="flex flex-col h-full min-h-0">
                 <div className="flex grow min-h-0 items-center justify-center">
                     <img className="h-full w-auto object-contain" src={photoUrl} />
