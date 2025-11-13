@@ -31,11 +31,7 @@ export default function FrameTypeSelect() {
                     <PhotoFrame frameType="landscape" />
                     <span className="text-lg font-semibold">가로 프레임</span>
                 </div>
-                <div
-                    className="flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg opacity-50"
-                    onClick={() => handleFrameTypeClick("portrait")}
-                    data-active={frameType === "portrait"}
-                >
+                <div className="flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg opacity-50">
                     <PhotoFrame frameType="portrait" />
                     <span className="text-lg font-semibold">세로 프레임</span>
                 </div>
