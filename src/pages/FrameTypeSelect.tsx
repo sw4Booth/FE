@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
@@ -10,9 +10,16 @@ import { PHOTO_SHOOT } from "../constants/routes";
 export default function FrameTypeSelect() {
     const { frameType, setFrameType } = usePhotoBooth();
     const navigate = useNavigate();
+    const [is2x6Selected, setIs2x6Selected] = useState(false);
 
-    const handleFrameTypeClick = (frameType: FrameType) => {
-        setFrameType(frameType);
+    const handleLandscapeFrameTypeClick = (frameType: FrameType) => {
+        if (!is2x6Selected) {
+            setFrameType(frameType);
+            setIs2x6Selected(true);
+        } else {
+            setFrameType(null);
+            setIs2x6Selected(false);
+        }
     };
 
     useEffect(() => {
@@ -25,7 +32,7 @@ export default function FrameTypeSelect() {
             <div className="flex grow gap-32 items-center min-h-0">
                 <div
                     className="relative flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg cursor-pointer data-[selected=true]:opacity-50"
-                    onClick={() => handleFrameTypeClick("landscape")}
+                    onClick={() => handleLandscapeFrameTypeClick("landscape")}
                     data-selected={frameType === "landscape"}
                 >
                     <PhotoFrame frameType="landscape" />
