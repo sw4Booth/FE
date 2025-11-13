@@ -8,9 +8,9 @@ export default function Start() {
     const navigate = useNavigate();
 
     return (
-        <div className="flex flex-col w-full h-full py-12 items-center justify-around">
-            <div className="flex items-center gap-6">
-                <img className="w-20 h-auto" src="/assets/greeny.png" style={{ filter: "brightness(0) saturate(100%) invert(22%) sepia(61%) saturate(2792%) hue-rotate(150deg) brightness(99%) contrast(105%)" }} />
+        <div className="flex flex-col w-full h-full py-12 items-center justify-center gap-12">
+            <div className="flex flex-col items-center gap-6">
+                <img className="w-48 h-auto rounded-full" src="/assets/greedy_badge.jpg" />
                 <Heading>{SITE_BRANDING}</Heading>
             </div>
             <Button size="lg" onClick={() => navigate(FRAME_TYPE_SELECT)}>시작하기</Button>
