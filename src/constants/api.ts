@@ -7,3 +7,6 @@ export const API_SHARE = API_BASEURL + "/share";
 export const API_SHARE_CREATE = API_SHARE + "/create";
 
 export const API_GUESTBOOK = API_BASEURL + "/guestbook";
+
+// Vercel functions
+export const API_AUTH = "/api/auth";

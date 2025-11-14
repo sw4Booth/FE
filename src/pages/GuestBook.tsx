@@ -13,11 +13,9 @@ export default function GuestBook() {
 
     useEffect(() => {
         const fetchPhotos = async () => {
-            const { data } = await api.get<GuestbookResponse>(`${API_GUESTBOOK}?page=${page}&size=${PER_PAGE_SIZE}&sort=createdAt,desc`);
+            const { data } = await api.get<GuestbookResponse>(API_GUESTBOOK, { page, size: PER_PAGE_SIZE, sort: "createdAt,desc" });
 
-            const mapped = data.content.map((item) => ({ id: item.id, url: item.imageUrl }));
-
-            setPhotos(mapped);
+            setPhotos(data.content);
         };
 
         fetchPhotos();

@@ -2,7 +2,7 @@ type ButtonVariant = "solid" | "outline";
 type ButtonColor = "primary" | "gray";
 type ButtonSize = "sm" | "md" | "lg";
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
     variant?: ButtonVariant;
     color?: ButtonColor;
@@ -11,7 +11,7 @@ interface Props {
     onClick?: () => void;
 }
 
-const Button = ({ children, variant = "solid", color = "primary", size = "md", disabled = false, onClick }: Props) => {
+const Button = ({ children, type = "button", variant = "solid", color = "primary", size = "md", disabled = false, onClick }: Props) => {
     const colorStyles: Record<ButtonColor, { solid: string; outline: string }> = {
         primary: {
             solid: "bg-primary-600 hover:bg-primary-500 text-white",
@@ -32,7 +32,7 @@ const Button = ({ children, variant = "solid", color = "primary", size = "md", d
     const baseStyles = "font-medium text-center cursor-pointer whitespace-nowrap";
 
     return (
-        <button className={[baseStyles, sizeStyles[size], colorStyles[color][variant], disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""].join(" ")} onClick={onClick}>{children}</button>
+        <button type={type} className={[baseStyles, sizeStyles[size], colorStyles[color][variant], disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""].join(" ")} onClick={onClick}>{children}</button>
     );
 };
 
