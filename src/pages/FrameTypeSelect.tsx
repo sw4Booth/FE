@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
