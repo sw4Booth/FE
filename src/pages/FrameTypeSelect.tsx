@@ -12,14 +12,8 @@ export default function FrameTypeSelect() {
     const navigate = useNavigate();
     const [is2x6Selected, setIs2x6Selected] = useState(false);
 
-    const handleLandscapeFrameTypeClick = (frameType: FrameType) => {
-        if (!is2x6Selected) {
-            setFrameType(frameType);
-            setIs2x6Selected(true);
-        } else {
-            setFrameType(null);
-            setIs2x6Selected(false);
-        }
+    const handleFrameTypeClick = (clickedType: FrameType) => {
+        setFrameType(frameType !== clickedType ? clickedType : null);
     };
 
     useEffect(() => {
@@ -32,7 +26,7 @@ export default function FrameTypeSelect() {
             <div className="flex grow gap-32 items-center min-h-0">
                 <div
                     className="relative flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg cursor-pointer data-[selected=true]:opacity-50"
-                    onClick={() => handleLandscapeFrameTypeClick("landscape")}
+                    onClick={() => handleFrameTypeClick("landscape")}
                     data-selected={frameType === "landscape"}
                 >
                     <PhotoFrame frameType="landscape" />
@@ -48,9 +42,23 @@ export default function FrameTypeSelect() {
                         </div>
                     )}
                 </div>
-                <div className="flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg opacity-50">
+                <div
+                    className="pointer-events-none opacity-50 relative flex flex-col items-center gap-6 p-8 h-full min-h-0 data-[active=true]:opacity-50 rounded-lg cursor-pointer"
+                    onClick={() => handleFrameTypeClick("portrait")}
+                    data-active={frameType === "portrait"}
+                >
                     <PhotoFrame frameType="portrait" />
                     <span className="text-lg font-semibold">세로 프레임</span>
+
+                    {frameType === "portrait" && (
+                        <div className="absolute inset-0 flex items-center justify-center z-10 rounded-md">
+                            <img
+                                src="/assets/check.svg"
+                                alt="check"
+                                className="w-25 h-25"
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
             <Button
