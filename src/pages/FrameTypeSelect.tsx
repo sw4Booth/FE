@@ -10,7 +10,6 @@ import { PHOTO_SHOOT } from "../constants/routes";
 export default function FrameTypeSelect() {
     const { frameType, setFrameType } = usePhotoBooth();
     const navigate = useNavigate();
-    const [is2x6Selected, setIs2x6Selected] = useState(false);
 
     const handleFrameTypeClick = (clickedType: FrameType) => {
         setFrameType(frameType !== clickedType ? clickedType : null);
