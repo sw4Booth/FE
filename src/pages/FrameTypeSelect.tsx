@@ -48,11 +48,8 @@ export default function FrameTypeSelect() {
                         </div>
                     )}
                 </div>
-                <div className="relative flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg opacity-50">
+                <div className="flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg opacity-50">
                     <PhotoFrame frameType="portrait" />
-                    <div className="absolute inset-0 top-12 flex items-center justify-center z-10 text-lg">
-                        현재 사용 불가
-                    </div>
                     <span className="text-lg font-semibold">세로 프레임</span>
                 </div>
             </div>
