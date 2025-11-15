@@ -38,7 +38,7 @@ const PhotoStrip = ({ photo, index, rowIndex, totalSize }: Props) => {
                     </svg>
                 </div>
                 <div className="relative -mt-6 w-[120px] z-0">
-                    <img src={photo.url} alt={`strip-${photo.id}`} className="w-full h-auto shadow-xl pointer-events-none" />
+                    <img src={photo.imageUrl} alt={`strip-${photo.id}`} className="w-full h-auto shadow-xl pointer-events-none" />
                 </div>
             </motion.div>
         </motion.div >

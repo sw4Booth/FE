@@ -1,9 +1,21 @@
-export type PhotoUploadPayload = FormData;
+import type { Photo } from "./Photo";
 
-export interface PhotoUploadResponse {
-    id: number;
-    imageUrl: string;
+export type PhotoUploadPayload = FormData;
+export type PhotoUploadResponse = Photo;
+
+interface PaginatedResponse<T> {
+    content: T;
+    last: boolean;
+    totalPages: number;
+    totalElements: number;
+    first: boolean;
+    size: number;
+    number: number;
+    numberOfElements: number;
+    empty: boolean;
 }
+
+export type PhotosResponse = PaginatedResponse<Photo[]>;
 
 export interface Guestbook {
     id: number;
@@ -12,9 +24,7 @@ export interface Guestbook {
     createdAt: string;
 }
 
-export interface GuestbookResponse {
-    content: Guestbook[];
-}
+export type GuestbookResponse = PaginatedResponse<Guestbook[]>;
 
 export interface GuestbookCreatePayload {
     photoId: number;
@@ -39,4 +49,12 @@ export interface ShareLinkResponse {
     uuid: string;
     imageUrl: string;
     qrImageBase64: string;
+}
+
+export interface AuthPayload {
+    password: string;
+}
+
+export interface AuthResponse {
+    status: boolean;
 }

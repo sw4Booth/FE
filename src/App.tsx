@@ -18,38 +18,45 @@ import {
     PRINT,
     PRINT_PROGRESS,
     SHARE,
-    GUEST_BOOK
+    GUEST_BOOK,
+    ADMIN
 } from "./constants/routes";
 import GuestBook from "./pages/GuestBook";
+import Admin from "./pages/Admin";
+import { SITE_BRANDING } from "./constants/constants";
 
 function App() {
     return (
-        <PhotoBoothProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route element={<MainLayout />}>
-                        <Route path={START} element={<Start />} />
-                        <Route
-                            path={FRAME_TYPE_SELECT}
-                            element={<FrameTypeSelect />}
-                        />
-                        <Route path={PHOTO_SHOOT} element={<PhotoShoot />} />
-                        <Route path={PHOTO_SELECT} element={<PhotoSelect />} />
-                        <Route
-                            path={FRAME_SKIN_SELECT}
-                            element={<FrameSkinSelect />}
-                        />
-                        <Route path={PRINT} element={<Print />} />
-                        <Route
-                            path={PRINT_PROGRESS}
-                            element={<PrintProgress />}
-                        />
-                        <Route path={`${SHARE}/:id`} element={<Share />} />
-                    </Route>
-                    <Route path={GUEST_BOOK} element={<GuestBook />} />
-                </Routes>
-            </BrowserRouter>
-        </PhotoBoothProvider>
+        <>
+            <title>{SITE_BRANDING}</title>
+            <PhotoBoothProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route element={<MainLayout />}>
+                            <Route path={START} element={<Start />} />
+                            <Route
+                                path={FRAME_TYPE_SELECT}
+                                element={<FrameTypeSelect />}
+                            />
+                            <Route path={PHOTO_SHOOT} element={<PhotoShoot />} />
+                            <Route path={PHOTO_SELECT} element={<PhotoSelect />} />
+                            <Route
+                                path={FRAME_SKIN_SELECT}
+                                element={<FrameSkinSelect />}
+                            />
+                            <Route path={PRINT} element={<Print />} />
+                            <Route
+                                path={PRINT_PROGRESS}
+                                element={<PrintProgress />}
+                            />
+                            <Route path={`${SHARE}/:id`} element={<Share />} />
+                        </Route>
+                        <Route path={GUEST_BOOK} element={<GuestBook />} />
+                        <Route path={ADMIN} element={<Admin />} />
+                    </Routes>
+                </BrowserRouter>
+            </PhotoBoothProvider>
+        </>
     );
 }
 
