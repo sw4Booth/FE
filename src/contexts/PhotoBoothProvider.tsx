@@ -13,7 +13,7 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
     const [selectedPhotos, setSelectedPhotos] = useState<string[]>([]);
     const [selectedFrameSkin, setSelectedFrameSkin] = useState<FrameSkin | null>(DefaultFrame);
-    const [printCount, setPrintCount] = useState(1);
+    const [printCount, setPrintCount] = useState(2);
     const [shouldPublishToGuestbook, setPublishToGuestbook] = useState(true);
     const [uploadedPhotoId, setUploadedPhotoId] = useState<number>(-1);
 
