@@ -95,15 +95,16 @@ export default function Print() {
         <>
             <div className="flex flex-col w-full h-full items-center gap-6 print:hidden">
                 <Heading>사진 출력</Heading>
-                <div className="flex flex-col grow items-center justify-center gap-12 w-[70%] p-12 bg-primary-100 rounded-lg">
+                <div className="flex flex-col grow items-center justify-center gap-12 w-[70%] p-12 bg-gray-100 rounded-lg">
                     <div className="flex items-center gap-4">
                         <span className="text-lg font-semibold">출력 매수 선택</span>
                         <div className="flex items-center gap-4 bg-white p-1 rounded-full">
-                            <button className="flex justify-center items-center p-1 w-8 h-8 rounded-full text-white bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer" onClick={handleCountDecrementClick} disabled={printCount <= 1}>-</button>
+                            <button className="flex justify-center items-center p-1 w-8 h-8 rounded-full text-white bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer" onClick={handleCountDecrementClick} disabled>-</button>
                             <span className="flex justify-center items-center text-lg w-8">{printCount}</span>
-                            <button className="flex justify-center items-center p-1 w-8 h-8 rounded-full text-white bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer" onClick={handleCountIncrementClick} disabled={printCount >= MAX_PRINT_COUNT}>+</button>
+                            <button className="flex justify-center items-center p-1 w-8 h-8 rounded-full text-white bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer" onClick={handleCountIncrementClick} disabled>+</button>
                         </div>
                     </div>
+                    <span className="text-primary-600 font-semibold text-lg">원활한 현장 운영을 위해 사진 출력은 2장으로 제한됩니다!</span>
                     <label className="flex items-center gap-3 cursor-pointer select-none group">
                         <input type="checkbox" checked={shouldPublishToGuestbook} onChange={handlePublishGuestbookClick} className="hidden" />
                         <div className="w-6 h-6 border-2 border-primary-600 rounded-md flex items-center justify-center group-has-checked:bg-primary-600">
