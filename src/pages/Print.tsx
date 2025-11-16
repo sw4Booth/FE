@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 const MAX_PRINT_COUNT = 4;
 
 export default function Print() {
-    const { printCount, shouldPublishToGuestbook, uploadedPhotoId, setPrintCount, setPublishToGuestbook } = usePhotoBooth();
+    const { printCount, shouldPublishToGuestbook, uploadedPhotoId, setPrintCount, setPublishToGuestbook, setQrImage } = usePhotoBooth();
     const [mergedDataUrl, setMergedDataUrl] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -41,6 +41,7 @@ export default function Print() {
         try {
             const { data } = await api.post<ShareLinkCreateResponse, ShareLinkCreatePayload>(API_SHARE_CREATE, { photoId: uploadedPhotoId });
 
+            setQrImage(data.qrImageBase64);
             const merged = await mergeImageWithQR(data.imageUrl, data.qrImageBase64);
 
             setMergedDataUrl(merged);
