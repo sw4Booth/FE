@@ -35,7 +35,7 @@ export default function Admin() {
 
     const fetchPhotos = async () => {
         try {
-            const { data } = await api.get<PhotosResponse>(API_PHOTOS, { page, size: PER_PAGE_SIZE });
+            const { data } = await api.get<PhotosResponse>(API_PHOTOS, { page, size: PER_PAGE_SIZE, sort: "createdAt,desc" });
 
             setPhotos(data.content);
             setTotalPages(data.totalPages);
