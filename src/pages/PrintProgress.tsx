@@ -12,7 +12,7 @@ export default function PrintProgress() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            // navigate(START);
+            navigate(START);
         }, NAVIGATE_DELAY);
 
         return () => clearTimeout(timer);
