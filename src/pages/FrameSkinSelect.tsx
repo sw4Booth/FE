@@ -113,7 +113,8 @@ export default function FrameSkinSelect() {
                             key={idx}
                             onClick={() => setSelectedFrameSkin(skin)}
                             data-selected={selectedFrameSkin === skin}
-                            className="relative cursor-pointer transition-all duration-200"
+                            className="relative cursor-pointer transition-all duration-200 
+                            hover:opacity-80 data-[selected=true]:opacity-50"
                         >
                             <PhotoFrame
                                 frameType="landscape"
@@ -122,10 +123,7 @@ export default function FrameSkinSelect() {
                             />
 
                             {selectedFrameSkin === skin && (
-                                <div className="z-10 absolute inset-0 bg-white/30"></div>
-                            )}
-                            {selectedFrameSkin === skin && (
-                                <div className="absolute inset-0 flex items-center justify-center z-20 rounded-md">
+                                <div className="absolute inset-0 flex items-center justify-center z-10 rounded-md">
                                     <img
                                         src="/assets/check.svg"
                                         alt="check"
