@@ -121,6 +121,7 @@ export default function FrameSkinSelect() {
                                 photos={[]}
                                 skin={skin}
                             />
+
                             {selectedFrameSkin === skin && (
                                 <div className="absolute inset-0 flex items-center justify-center z-10 rounded-md">
                                     <img
