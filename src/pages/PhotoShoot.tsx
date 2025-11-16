@@ -15,6 +15,17 @@ export default function PhotoShoot() {
     const navigate = useNavigate();
     const [countdown, setCountdown] = useState<number | null>(null);
     const [flash, setFlash] = useState(false);
+    const timeLeft = useRef(SHOOT_INTERVAL);
+    const timer = useRef<number | null>(null);
+
+    function stopCamera() {
+        if (videoRef.current && videoRef.current.srcObject) {
+            const tracks = (
+                videoRef.current.srcObject as MediaStream
+            ).getTracks();
+            tracks.forEach((track) => track.stop());
+        }
+    }
 
     useEffect(() => {
         async function setupCamera() {
@@ -31,49 +42,41 @@ export default function PhotoShoot() {
         }
 
         async function startShooting() {
-            let timeLeft = SHOOT_INTERVAL;
+            timer.current = window.setInterval(() => {
+                timeLeft.current -= 1000;
+                setRemainingTime(timeLeft.current);
 
-            const timer = setInterval(() => {
-                timeLeft -= 1000;
-                setRemainingTime(timeLeft);
-
-                if (timeLeft <= 3000 && timeLeft > 0) {
-                    const seconds = Math.ceil(timeLeft / 1000);
+                if (timeLeft.current <= 3000 && timeLeft.current > 0) {
+                    const seconds = Math.ceil(timeLeft.current / 1000);
                     setCountdown(seconds);
                 }
 
-                if (timeLeft <= 0) {
+                if (timeLeft.current <= 0) {
                     takePhoto();
                     setCurrentCount((prev) => {
                         const newCount = prev + 1;
                         if (newCount >= TOTAL_SHOTS) {
-                            clearInterval(timer);
+                            clearInterval(timer.current!);
                             stopCamera();
                             navigate(PHOTO_SELECT);
                         }
                         return newCount;
                     });
 
-                    timeLeft = SHOOT_INTERVAL;
+                    timeLeft.current = SHOOT_INTERVAL;
                     setRemainingTime(SHOOT_INTERVAL);
                     setCountdown(null);
                 }
             }, 1000);
         }
 
-        function stopCamera() {
-            if (videoRef.current && videoRef.current.srcObject) {
-                const tracks = (
-                    videoRef.current.srcObject as MediaStream
-                ).getTracks();
-                tracks.forEach((track) => track.stop());
-            }
-        }
-
         setupCamera();
         startShooting();
 
-        return () => stopCamera();
+        return () => {
+            if (timer.current) clearInterval(timer.current);
+            stopCamera();
+        };
     }, [navigate]);
 
     const takePhoto = () => {
@@ -97,6 +100,24 @@ export default function PhotoShoot() {
         setCapturedPhotos((prev) => [...prev, dataUrl]);
     };
 
+    const handleClickedShot = () => {
+        takePhoto();
+
+        setCurrentCount((prev) => {
+            const newCount = prev + 1;
+            if (newCount >= TOTAL_SHOTS) {
+                clearInterval(timer.current!);
+                stopCamera();
+                navigate(PHOTO_SELECT);
+            }
+            return newCount;
+        });
+
+        timeLeft.current = SHOOT_INTERVAL;
+        setRemainingTime(SHOOT_INTERVAL);
+        setCountdown(null);
+    };
+
     return (
         <div className="flex flex-col w-full h-full items-center gap-2">
             <Heading>사진 촬영</Heading>
@@ -112,7 +133,10 @@ export default function PhotoShoot() {
                     <span>{Math.ceil(remainingTime / 1000)}초</span>
                 </div>
             </div>
-            <div className="w-[70%] aspect-[7/5] bg-gray-200 relative overflow-hidden">
+            <div
+                className="w-[70%] aspect-[7/5] bg-gray-200 relative overflow-hidden"
+                onClick={() => handleClickedShot()}
+            >
                 <video
                     ref={videoRef}
                     autoPlay
