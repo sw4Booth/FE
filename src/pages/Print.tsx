@@ -124,9 +124,9 @@ export default function Print() {
                 <Button size="lg" onClick={handlePrintClick}>출력하기</Button>
             </div>
             {mergedDataUrl && (
-                <div className="hidden print:flex justify-center items-center w-full h-full">
-                    <img src={mergedDataUrl} className="print:w-[102mm] print:h-[154mm] print:object-contain" />
-                    <img src={mergedDataUrl} className="print:w-[102mm] print:h-[154mm] print:object-contain" />
+                <div className="print:flex justify-center items-center w-full h-full">
+                    <img src={mergedDataUrl} className="mb-[1mm] print:w-[102mm] print:h-[150mm] print:object-contain" />
+                    <img src={mergedDataUrl} className="mb-[1mm] print:w-[102mm] print:h-[150mm] print:object-contain" />
                 </div>
             )}
         </>

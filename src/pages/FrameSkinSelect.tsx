@@ -53,7 +53,7 @@ export default function FrameSkinSelect() {
         if (!frameRef.current) return;
 
         try {
-            const canvas = await html2canvas(element, { scale: 2 }); // TODO: 인쇄 상태에 따라 scale(DPI) 수정
+            const canvas = await html2canvas(element, { scale: 3 }); // TODO: 인쇄 상태에 따라 scale(DPI) 수정
 
             canvas.toBlob(async (blob) => {
                 if (!blob) return;
