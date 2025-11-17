@@ -21,6 +21,7 @@ export default function Start() {
     } = usePhotoBooth();
 
     useEffect(() => {
+        // reset
         setFrameType(null);
         setSelectedPhotos([]);
         setCapturedPhotos([]);
