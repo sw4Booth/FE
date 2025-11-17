@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { PHOTO_SELECT } from "../constants/routes";
 
 const TOTAL_SHOTS = 8;
-const SHOOT_INTERVAL = 7000;
+const SHOOT_INTERVAL = 5000;
 
 export default function PhotoShoot() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
