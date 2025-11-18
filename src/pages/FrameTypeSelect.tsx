@@ -24,7 +24,7 @@ export default function FrameTypeSelect() {
             <Heading>가로 / 세로 프레임 선택</Heading>
             <div className="flex grow gap-32 items-center min-h-0">
                 <div
-                    className="relative flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg cursor-pointer data-[selected=true]:opacity-50"
+                    className="relative flex flex-col items-center gap-6 p-8 min-h-0 rounded-lg cursor-pointer data-[selected=true]:bg-gray-100"
                     onClick={() => handleFrameTypeClick("landscape")}
                     data-selected={frameType === "landscape"}
                 >
@@ -36,18 +36,24 @@ export default function FrameTypeSelect() {
                             <img
                                 src="/assets/check.svg"
                                 alt="check"
-                                className="w-25 h-25"
+                                className="w-25 h-25 text-primary-600"
                             />
                         </div>
                     )}
                 </div>
                 <div
-                    className="pointer-events-none opacity-50 relative flex flex-col items-center gap-6 p-8 h-full min-h-0 data-[active=true]:opacity-50 rounded-lg cursor-pointer"
+                    className="pointer-events-none relative flex flex-col items-center gap-6 p-8 min-h-0 rounded-lg cursor-pointer data-[selected=true]:bg-gray-100"
                     onClick={() => handleFrameTypeClick("portrait")}
-                    data-active={frameType === "portrait"}
+                    data-selected={frameType === "portrait"}
                 >
-                    <PhotoFrame frameType="portrait" />
+                    <div className="blur-xs">
+                        <PhotoFrame frameType="portrait" />
+                    </div>
                     <span className="text-lg font-semibold">세로 프레임</span>
+
+                    <span className="absolute top-[45%] flex items-center justify-center bg-gray-50 px-4 py-2 rounded-lg font-semibold text-lg">
+                        준비중입니다.
+                    </span>
 
                     {frameType === "portrait" && (
                         <div className="absolute inset-0 flex items-center justify-center z-10 rounded-md">
