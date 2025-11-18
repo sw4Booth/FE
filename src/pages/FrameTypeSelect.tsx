@@ -21,10 +21,10 @@ export default function FrameTypeSelect() {
 
     return (
         <div className="flex flex-col w-full h-full items-center gap-6">
-            <Heading>가로 / 세로 프레임 선택</Heading>
+            <Heading>가로 / 세로 프레임을 선택해주세요</Heading>
             <div className="flex grow gap-32 items-center min-h-0">
                 <div
-                    className="relative flex flex-col items-center gap-6 p-8 min-h-0 rounded-lg cursor-pointer data-[selected=true]:bg-gray-100"
+                    className="relative flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg cursor-pointer data-[selected=true]:opacity-50"
                     onClick={() => handleFrameTypeClick("landscape")}
                     data-selected={frameType === "landscape"}
                 >
@@ -51,8 +51,8 @@ export default function FrameTypeSelect() {
                     </div>
                     <span className="text-lg font-semibold">세로 프레임</span>
 
-                    <span className="absolute top-[45%] flex items-center justify-center bg-gray-50 px-4 py-2 rounded-lg font-semibold text-lg">
-                        준비중입니다.
+                    <span className="absolute top-[43%] flex items-center justify-center px-4 py-2 rounded-lg font-semibold text-xl">
+                        현재 사용 불가
                     </span>
 
                     {frameType === "portrait" && (
