@@ -7,6 +7,7 @@ import { api } from "../libs/api";
 import { API_GUESTBOOK, API_SHARE_CREATE } from "../constants/api";
 import { type GuestbookCreateResponse, type GuestbookCreatePayload, type ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
 import { useEffect, useState } from "react";
+import jsPDF from "jspdf";
 
 const MAX_PRINT_COUNT = 4;
 
@@ -27,16 +28,6 @@ export default function Print() {
         setPublishToGuestbook(!shouldPublishToGuestbook);
     };
 
-    useEffect(() => {
-        if (!mergedDataUrl) return;
-
-        window.print();
-
-        if (shouldPublishToGuestbook) publishToGuestbook();
-
-        navigate(PRINT_PROGRESS);
-    }, [mergedDataUrl]);
-
     const handlePrintClick = async () => {
         try {
             const { data } = await api.post<ShareLinkCreateResponse, ShareLinkCreatePayload>(API_SHARE_CREATE, { photoId: uploadedPhotoId });
@@ -45,9 +36,59 @@ export default function Print() {
             const merged = await mergeImageWithQR(data.imageUrl, data.qrImageBase64);
 
             setMergedDataUrl(merged);
+
+            const pdfBlob = await createPrintablePDF(merged);
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+
+            const iframe = document.createElement("iframe");
+            iframe.style.position = "fixed";
+            iframe.style.right = "0";
+            iframe.style.bottom = "0";
+            iframe.style.width = "0";
+            iframe.style.height = "0";
+            iframe.src = pdfUrl;
+
+            iframe.onload = () => {
+                const win = iframe.contentWindow;
+                if (!win) return;
+
+                win.onafterprint = () => {
+                    document.body.removeChild(iframe);
+                    URL.revokeObjectURL(pdfUrl);
+
+                    if (shouldPublishToGuestbook) publishToGuestbook();
+
+                    navigate(PRINT_PROGRESS);
+                };
+
+                win.print();
+            };
+
+            document.body.appendChild(iframe);
         } catch (e) {
             console.error(e);
         }
+    };
+
+    const createPrintablePDF = async (url: string) => {
+        const imgWidth = 51;
+        const imgHeight = 152;
+
+        const pageWidth = 102;
+        const pageHeight = 152;
+
+
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: [pageWidth, pageHeight],
+        });
+
+        pdf.addImage(url, "PNG", 0, 0, imgWidth, imgHeight);
+
+        pdf.addImage(url, "PNG", imgWidth, 0, imgWidth, imgHeight);
+
+        return pdf.output("blob");
     };
 
     const mergeImageWithQR = async (photoUrl: string, qrBase64: string) => {
@@ -123,12 +164,6 @@ export default function Print() {
                 </div>
                 <Button size="lg" onClick={handlePrintClick} disabled={uploadedPhotoId === -1}>출력하기</Button>
             </div>
-            {mergedDataUrl && (
-                <div className="hidden print:flex justify-center items-center w-full h-full">
-                    <img src={mergedDataUrl} className="mb-[1mm] print:w-[102mm] print:h-[150mm] print:object-contain" />
-                    <img src={mergedDataUrl} className="mb-[1mm] print:w-[102mm] print:h-[150mm] print:object-contain" />
-                </div>
-            )}
         </>
     );
 }
