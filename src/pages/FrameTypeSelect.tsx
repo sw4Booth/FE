@@ -24,7 +24,7 @@ export default function FrameTypeSelect() {
             <Heading>가로 / 세로 프레임을 선택해주세요</Heading>
             <div className="flex grow gap-32 items-center min-h-0">
                 <div
-                    className="relative flex flex-col items-center gap-6 p-8 h-full min-h-0 rounded-lg cursor-pointer data-[selected=true]:opacity-50"
+                    className="relative flex flex-col justify-center items-center gap-6 p-8 h-full min-h-0 rounded-lg cursor-pointer data-[selected=true]:opacity-50"
                     onClick={() => handleFrameTypeClick("landscape")}
                     data-selected={frameType === "landscape"}
                 >
@@ -42,7 +42,7 @@ export default function FrameTypeSelect() {
                     )}
                 </div>
                 <div
-                    className="pointer-events-none relative flex flex-col items-center gap-6 p-8 min-h-0 rounded-lg cursor-pointer data-[selected=true]:bg-gray-100"
+                    className="pointer-events-none relative flex flex-col justify-center items-center gap-6 p-8 min-h-0 rounded-lg cursor-pointer data-[selected=true]:bg-gray-100"
                     onClick={() => handleFrameTypeClick("portrait")}
                     data-selected={frameType === "portrait"}
                 >
