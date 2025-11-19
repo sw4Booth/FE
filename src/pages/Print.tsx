@@ -6,7 +6,7 @@ import { PRINT_PROGRESS } from "../constants/routes";
 import { api } from "../libs/api";
 import { API_GUESTBOOK, API_SHARE_CREATE } from "../constants/api";
 import { type GuestbookCreateResponse, type GuestbookCreatePayload, type ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import jsPDF from "jspdf";
 
 const MAX_PRINT_COUNT = 4;
@@ -37,7 +37,7 @@ export default function Print() {
 
             setMergedDataUrl(merged);
 
-            const pdfBlob = await createPrintablePDF(merged);
+            const pdfBlob = await createPrintablePDF(mergedDataUrl ?? merged);
             const pdfUrl = URL.createObjectURL(pdfBlob);
 
             const iframe = document.createElement("iframe");
