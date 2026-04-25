@@ -4,7 +4,7 @@ import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useNavigate } from "react-router";
 import { PRINT_PROGRESS } from "../constants/routes";
 import { api } from "../libs/api";
-import { API_GUESTBOOK, API_SHARE } from "../constants/api";
+import { API_GUESTBOOK, API_PRINT, API_SHARE } from "../constants/api";
 import { type GuestbookCreateResponse, type GuestbookCreatePayload, type ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
 import { useEffect, useState } from "react";
 
@@ -30,11 +30,29 @@ export default function Print() {
     useEffect(() => {
         if (!mergedDataUrl) return;
 
-        window.print();
+        const print = async () => {
+            try {
+                const res = await fetch(mergedDataUrl);
+                const blob = await res.blob();
 
-        if (shouldPublishToGuestbook) publishToGuestbook();
+                for (let i = 0; i < printCount; i++) {
+                    const form = new FormData();
 
-        navigate(PRINT_PROGRESS);
+                    form.append("file", blob, "merged.png");
+
+                    await api.post(API_PRINT, form);
+                }
+
+                if (shouldPublishToGuestbook) publishToGuestbook();
+
+                navigate(PRINT_PROGRESS);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        print();
+
     }, [mergedDataUrl]);
 
     const handlePrintClick = async () => {
