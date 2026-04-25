@@ -4,7 +4,7 @@ import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useNavigate } from "react-router";
 import { PRINT_PROGRESS } from "../constants/routes";
 import { api } from "../libs/api";
-import { API_GUESTBOOK, API_SHARE_CREATE } from "../constants/api";
+import { API_GUESTBOOK, API_SHARE } from "../constants/api";
 import { type GuestbookCreateResponse, type GuestbookCreatePayload, type ShareLinkCreateResponse, type ShareLinkCreatePayload } from "../types/api";
 import { useEffect, useState } from "react";
 
@@ -39,7 +39,7 @@ export default function Print() {
 
     const handlePrintClick = async () => {
         try {
-            const { data } = await api.post<ShareLinkCreateResponse, ShareLinkCreatePayload>(API_SHARE_CREATE, { photoId: uploadedPhotoId });
+            const { data } = await api.post<ShareLinkCreateResponse, ShareLinkCreatePayload>(API_SHARE, { photoId: uploadedPhotoId });
 
             setQrImage(data.qrImageBase64);
             const merged = await mergeImageWithQR(data.imageUrl, data.qrImageBase64);
@@ -84,7 +84,7 @@ export default function Print() {
 
     const publishToGuestbook = async () => {
         try {
-            const response = await api.post<GuestbookCreateResponse, GuestbookCreatePayload>(API_GUESTBOOK, { photoId: uploadedPhotoId, message: "" });
+            const response = await api.post<GuestbookCreateResponse, GuestbookCreatePayload>(API_GUESTBOOK, { photoId: uploadedPhotoId });
 
             if (response.code === 201) console.log("Successfully published photo to guestbook for id:", uploadedPhotoId);
         } catch (e) {

@@ -5,14 +5,10 @@ export type PhotoUploadResponse = Photo;
 
 interface PaginatedResponse<T> {
     content: T;
-    last: boolean;
     totalPages: number;
     totalElements: number;
-    first: boolean;
     size: number;
-    number: number;
-    numberOfElements: number;
-    empty: boolean;
+    page: number;
 }
 
 export type PhotosResponse = PaginatedResponse<Photo[]>;
@@ -20,7 +16,6 @@ export type PhotosResponse = PaginatedResponse<Photo[]>;
 export interface Guestbook {
     id: number;
     imageUrl: string;
-    message: string;
     createdAt: string;
 }
 
@@ -28,7 +23,6 @@ export type GuestbookResponse = PaginatedResponse<Guestbook[]>;
 
 export interface GuestbookCreatePayload {
     photoId: number;
-    message: string;
 }
 
 export type GuestbookCreateResponse = Guestbook;

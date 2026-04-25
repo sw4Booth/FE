@@ -15,11 +15,7 @@ export default function GuestBook() {
 
     const fetchPage = async (page: number) => {
         try {
-            const { data } = await api.get<GuestbookResponse>(API_GUESTBOOK, {
-                page,
-                size: PER_PAGE_SIZE,
-                sort: "createdAt,desc"
-            });
+            const { data } = await api.get<GuestbookResponse>(API_GUESTBOOK, { page, size: PER_PAGE_SIZE });
 
             setTotalPages(data.totalPages);
 
