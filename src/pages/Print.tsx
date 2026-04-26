@@ -41,6 +41,7 @@ export default function Print() {
                     const form = new FormData();
 
                     form.append("file", blob, "merged.png");
+                    form.append("photoId", String(uploadedPhotoId));
 
                     await api.post(API_PRINT, form);
                 }

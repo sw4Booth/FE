@@ -50,5 +50,16 @@ export interface AuthPayload {
 }
 
 export interface AuthResponse {
-    status: boolean;
+    token: string;
 }
+
+export interface PrintJob {
+    id: string;
+    status: "pending" | "printing" | "completed" | "failed";
+    printerId: string | null;
+    imageUrl: string;
+    createdAt: number;
+    claimedAt: number | null;
+}
+
+export type PrintQueueResponse = PrintJob[];

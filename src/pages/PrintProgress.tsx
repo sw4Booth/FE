@@ -4,6 +4,7 @@ import { START } from "../constants/routes";
 import { useEffect } from "react";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 
+const INIT_DELAY = 5000;
 const NAVIGATE_DELAY_PER_PRINT = 8000;
 const MAX_DELAY = 30000;
 
@@ -12,7 +13,7 @@ export default function PrintProgress() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const delay = Math.min(printCount * NAVIGATE_DELAY_PER_PRINT, MAX_DELAY);
+        const delay = Math.min(INIT_DELAY + printCount * NAVIGATE_DELAY_PER_PRINT, MAX_DELAY);
 
         const timer = setTimeout(() => {
             navigate(START);

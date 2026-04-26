@@ -8,3 +8,4 @@ export const PRINT_PROGRESS = "/print-progress";
 export const SHARE = "/share";
 export const GUEST_BOOK = "/guest-book";
 export const ADMIN = "/admin";
+export const ADMIN_LOGIN = "/admin/login";

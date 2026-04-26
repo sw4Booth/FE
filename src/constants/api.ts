@@ -8,6 +8,6 @@ export const API_SHARE = API_BASEURL + "/share";
 export const API_GUESTBOOK = API_BASEURL + "/guestbook";
 
 export const API_PRINT = API_BASEURL + "/print";
+export const API_PRINT_QUEUE = API_BASEURL + "/print-queue";
 
-// Vercel functions
-export const API_AUTH = "/api/auth";
+export const API_AUTH = API_BASEURL + "/auth";

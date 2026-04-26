@@ -19,11 +19,13 @@ import {
     PRINT_PROGRESS,
     SHARE,
     GUEST_BOOK,
-    ADMIN
+    ADMIN,
+    ADMIN_LOGIN
 } from "./constants/routes";
 import GuestBook from "./pages/GuestBook";
 import Admin from "./pages/Admin";
 import { SITE_BRANDING } from "./constants/constants";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
     return (
@@ -53,6 +55,7 @@ function App() {
                         </Route>
                         <Route path={GUEST_BOOK} element={<GuestBook />} />
                         <Route path={ADMIN} element={<Admin />} />
+                        <Route path={ADMIN_LOGIN} element={<AdminLogin />} />
                     </Routes>
                 </BrowserRouter>
             </PhotoBoothProvider>
