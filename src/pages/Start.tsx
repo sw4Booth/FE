@@ -26,7 +26,7 @@ export default function Start() {
         setSelectedPhotos([]);
         setCapturedPhotos([]);
         setSelectedFrameSkin(DefaultFrame);
-        setPrintCount(2);
+        setPrintCount(1);
         setPublishToGuestbook(true);
         setUploadedPhotoId(-1);
         setQrImage("");

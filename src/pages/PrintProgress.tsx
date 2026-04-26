@@ -4,16 +4,19 @@ import { START } from "../constants/routes";
 import { useEffect } from "react";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 
-const NAVIGATE_DELAY = 15000;
+const NAVIGATE_DELAY_PER_PRINT = 8000;
+const MAX_DELAY = 30000;
 
 export default function PrintProgress() {
-    const { qrImage } = usePhotoBooth();
+    const { qrImage, printCount } = usePhotoBooth();
     const navigate = useNavigate();
 
     useEffect(() => {
+        const delay = Math.min(printCount * NAVIGATE_DELAY_PER_PRINT, MAX_DELAY);
+
         const timer = setTimeout(() => {
             navigate(START);
-        }, NAVIGATE_DELAY);
+        }, delay);
 
         return () => clearTimeout(timer);
     }, [navigate]);
