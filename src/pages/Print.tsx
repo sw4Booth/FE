@@ -70,7 +70,7 @@ export default function Print() {
     };
 
     const mergeImageWithQR = async (photoUrl: string, qrBase64: string) => {
-        const photo = await loadImage(photoUrl);
+        const photo = await loadImage(`${photoUrl}?t=${Date.now()}`);
         const qr = await loadImage(qrBase64);
 
         const canvas = document.createElement("canvas");
