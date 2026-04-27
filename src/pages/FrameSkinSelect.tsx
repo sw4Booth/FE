@@ -32,6 +32,7 @@ export default function FrameSkinSelect() {
         setUploadedPhotoId,
     } = usePhotoBooth();
     const navigate = useNavigate();
+    // const [transformedPhotos, setTransformedPhotos] = useState<string[]>([]);
 
     const handleFinishSelect = async () => {
         const frameSrc = frameRef.current;
@@ -62,7 +63,7 @@ export default function FrameSkinSelect() {
                 const formData = new FormData();
                 formData.append(
                     "file",
-                    new File([blob], "image.png", { type: "image/png" })
+                    new File([blob], "image.png", { type: "image/png" }),
                 );
 
                 // 서버 업로드
@@ -76,7 +77,7 @@ export default function FrameSkinSelect() {
                     console.log(
                         "Upload success with id:",
                         data.id,
-                        data.imageUrl
+                        data.imageUrl,
                     );
                 } catch (e) {
                     console.error("Upload failed:", e);

@@ -3,4 +3,4 @@ export interface FrameSkin {
     decorations?: React.ReactNode;
 }
 
-export type FrameType = "landscape" | "portrait";
+export type FrameType = "landscape" | "portrait" | "ai";
