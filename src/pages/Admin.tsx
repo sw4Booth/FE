@@ -62,6 +62,12 @@ export default function Admin() {
         fetchPrintQueue();
     };
 
+    const handleDeleteJob = async (jobId: string) => {
+        if (!confirm("정말 삭제하시겠습니까?")) return;
+        await api.delete(`${API_PRINT_QUEUE}/${jobId}`);
+        fetchPrintQueue();
+    };
+
     const handleLogout = () => {
         localStorage.removeItem("admin_token");
         clearAuthToken();
@@ -192,17 +198,20 @@ export default function Admin() {
                                                             "bg-gray-100 text-gray-700"}`}>{job.status}</span>
                                             </td>
                                             <td className="p-3">{job.printerId ?? "-"}</td>
-                                            <td className="p-3">{new Date(job.createdAt).toLocaleTimeString()}</td>
+                                            <td className="p-3">{new Date(job.createdAt).toLocaleString()}</td>
                                             <td className="p-3">
-                                                {job.status === "failed" && (
-                                                    <Button variant="outline" size="sm" onClick={() => handleRetry(job.id)}>재시도</Button>
-                                                )}
+                                                <div className="flex gap-2">
+                                                    {job.status === "failed" && (
+                                                        <Button variant="outline" size="sm" onClick={() => handleRetry(job.id)}>재시도</Button>
+                                                    )}
+                                                    <Button variant="solid" size="sm" onClick={() => handleDeleteJob(job.id)}>삭제</Button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
                                     {printJobs.length === 0 && (
                                         <tr>
-                                            <td colSpan={5} className="p-6 text-center text-gray-400">대기 중인 작업이 없습니다.</td>
+                                            <td colSpan={6} className="p-6 text-center text-gray-400">대기 중인 작업이 없습니다.</td>
                                         </tr>
                                     )}
                                 </tbody>
