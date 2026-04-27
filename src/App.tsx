@@ -20,12 +20,14 @@ import {
     SHARE,
     GUEST_BOOK,
     ADMIN,
-    ADMIN_LOGIN
+    ADMIN_LOGIN,
+    CHARACTER_SELECT,
 } from "./constants/routes";
 import GuestBook from "./pages/GuestBook";
 import Admin from "./pages/Admin";
 import { SITE_BRANDING } from "./constants/constants";
 import AdminLogin from "./pages/AdminLogin";
+import CharacterSelect from "./pages/CharacterSelect";
 
 function App() {
     return (
@@ -40,11 +42,21 @@ function App() {
                                 path={FRAME_TYPE_SELECT}
                                 element={<FrameTypeSelect />}
                             />
-                            <Route path={PHOTO_SHOOT} element={<PhotoShoot />} />
-                            <Route path={PHOTO_SELECT} element={<PhotoSelect />} />
+                            <Route
+                                path={PHOTO_SHOOT}
+                                element={<PhotoShoot />}
+                            />
+                            <Route
+                                path={PHOTO_SELECT}
+                                element={<PhotoSelect />}
+                            />
                             <Route
                                 path={FRAME_SKIN_SELECT}
                                 element={<FrameSkinSelect />}
+                            />
+                            <Route
+                                path={CHARACTER_SELECT}
+                                element={<CharacterSelect />}
                             />
                             <Route path={PRINT} element={<Print />} />
                             <Route

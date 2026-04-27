@@ -2,7 +2,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
-import { PRINT } from "../constants/routes";
+import { CHARACTER_SELECT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { DefaultFrame } from "../frames/DefaultFrame";
 import { BlackGreedyFrame } from "../frames/BlackGreedyFrame";
@@ -32,7 +32,6 @@ export default function FrameSkinSelect() {
         setUploadedPhotoId,
     } = usePhotoBooth();
     const navigate = useNavigate();
-    // const [transformedPhotos, setTransformedPhotos] = useState<string[]>([]);
 
     const handleFinishSelect = async () => {
         const frameSrc = frameRef.current;
@@ -44,7 +43,7 @@ export default function FrameSkinSelect() {
         const clone = frameSrc.cloneNode(true) as HTMLElement;
         document.body.appendChild(clone);
 
-        navigate(PRINT);
+        navigate(CHARACTER_SELECT);
 
         // 이미지 업로드
         generateAndUploadImage(clone);
