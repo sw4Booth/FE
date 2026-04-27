@@ -4,7 +4,7 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { FRAME_SKIN_SELECT } from "../constants/routes";
-import { DefaultFrame } from "../frames/DefaultFrame";
+import { DefaultFrame } from "../frames/DefaultGreedyFrame";
 
 const PHOTO_SELECT_LIMIT = 4;
 
