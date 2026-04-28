@@ -103,6 +103,7 @@ const PhotoFrame = forwardRef<HTMLDivElement, Props>(
                         ))}
                     </div>
                 )}
+                {skin?.decorations}
             </div>
         );
     },

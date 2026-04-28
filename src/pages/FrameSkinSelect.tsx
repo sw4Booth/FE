@@ -5,8 +5,9 @@ import { useNavigate } from "react-router";
 import { CHARACTER_SELECT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { DefaultFrame } from "../frames/DefaultFrame";
+import { BlackFrame } from "../frames/BlackFrame";
 
-const frameSkins = [DefaultFrame];
+const frameSkins = [DefaultFrame, BlackFrame];
 
 export default function FrameSkinSelect() {
     const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
@@ -23,13 +24,13 @@ export default function FrameSkinSelect() {
             <div className="flex w-full justify-center mt-10">
                 <div className="mx-auto my-auto ml-20">
                     <PhotoFrame
-                        frameType="landscape"
+                        frameType={"ai"}
                         photos={selectedPhotos}
                         skin={selectedFrameSkin ?? undefined}
                     />
                 </div>
 
-                <div className="w-[80%] my-auto mx-auto scale-80 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
+                <div className="w-[80%] my-auto mx-auto scale-60 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}
@@ -39,7 +40,7 @@ export default function FrameSkinSelect() {
                             hover:opacity-80 data-[selected=true]:opacity-50"
                         >
                             <PhotoFrame
-                                frameType="landscape"
+                                frameType={"ai"}
                                 photos={[]}
                                 skin={skin}
                             />

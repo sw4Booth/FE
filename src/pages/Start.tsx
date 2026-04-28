@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import { PHOTO_SHOOT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useEffect } from "react";
-import { DefaultFrame } from "../frames/DefaultGreedyFrame";
+import { DefaultFrame } from "../frames/DefaultFrame";
 
 export default function Start() {
     const navigate = useNavigate();

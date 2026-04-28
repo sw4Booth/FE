@@ -4,7 +4,7 @@ import {
     type PhotoBoothContextType,
 } from "./PhotoBoothContext";
 import type { FrameType, FrameSkin } from "../types/Frame";
-import { DefaultFrame } from "../frames/DefaultGreedyFrame";
+import { DefaultFrame } from "../frames/DefaultFrame";
 
 export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     children,

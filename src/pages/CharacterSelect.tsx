@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { api } from "../libs/api";
 import { PRINT } from "../constants/routes";
-import { API_PHOTOS_UPLOAD } from "../constants/api";
+import { API_PHOTOS_TRANSFORM, API_PHOTOS_UPLOAD } from "../constants/api";
 import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
 
 const STYLES = [
@@ -83,7 +83,7 @@ export default function CharacterSelect() {
             const { data } = await api.post<
                 TransformResponse,
                 TransformRequest
-            >("/photos/transform", {
+            >(API_PHOTOS_TRANSFORM, {
                 images: base64Photos,
                 style: selectedStyle,
             });
