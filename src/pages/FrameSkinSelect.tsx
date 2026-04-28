@@ -2,97 +2,20 @@ import Heading from "../components/Heading";
 import PhotoFrame from "../components/PhotoFrame";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
-import { PRINT } from "../constants/routes";
+import { CHARACTER_SELECT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { DefaultFrame } from "../frames/DefaultFrame";
-import { BlackGreedyFrame } from "../frames/BlackGreedyFrame";
-import { PotatoGreedyFrame } from "../frames/PotatoGreedyFrame";
-import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
-import { SpaceGreedyFrame } from "../frames/SpaceGreedyFrame";
-import { api } from "../libs/api";
-import { API_PHOTOS_UPLOAD } from "../constants/api";
-import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
-import { useRef } from "react";
-import html2canvas from "html2canvas";
+import { BlackFrame } from "../frames/BlackFrame";
 
-const frameSkins = [
-    DefaultFrame,
-    BlackGreedyFrame,
-    PotatoGreedyFrame,
-    OceanGreedyFrame,
-    SpaceGreedyFrame,
-];
+const frameSkins = [DefaultFrame, BlackFrame];
 
 export default function FrameSkinSelect() {
-    const frameRef = useRef<HTMLDivElement>(null);
-    const {
-        selectedPhotos,
-        selectedFrameSkin,
-        setSelectedFrameSkin,
-        setUploadedPhotoId,
-    } = usePhotoBooth();
+    const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
+        usePhotoBooth();
     const navigate = useNavigate();
 
     const handleFinishSelect = async () => {
-        const frameSrc = frameRef.current;
-        if (!frameSrc) {
-            console.warn("No frameRef available for capture.");
-            return;
-        }
-
-        const clone = frameSrc.cloneNode(true) as HTMLElement;
-        document.body.appendChild(clone);
-
-        navigate(PRINT);
-
-        // 이미지 업로드
-        generateAndUploadImage(clone);
-    };
-
-    const generateAndUploadImage = async (element: HTMLElement) => {
-        if (!frameRef.current) return;
-
-        try {
-            const canvas = await html2canvas(element, { scale: 3 }); // TODO: 인쇄 상태에 따라 scale(DPI) 수정
-
-            canvas.toBlob(async (blob) => {
-                if (!blob) return;
-
-                // FormData에 담기
-                const formData = new FormData();
-                formData.append(
-                    "file",
-                    new File([blob], "image.png", { type: "image/png" })
-                );
-
-                // 서버 업로드
-                try {
-                    const { data } = await api.post<
-                        PhotoUploadResponse,
-                        PhotoUploadPayload
-                    >(API_PHOTOS_UPLOAD, formData);
-                    setUploadedPhotoId(data.id);
-
-                    console.log(
-                        "Upload success with id:",
-                        data.id,
-                        data.imageUrl
-                    );
-                } catch (e) {
-                    console.error("Upload failed:", e);
-                }
-
-                // 다운로드 테스트
-                // const link = document.createElement("a");
-                // link.download = "photobooth.png";
-                // link.href = URL.createObjectURL(blob);
-                // link.click();
-            });
-        } catch (e) {
-            console.error("Failed to generate image:", e);
-        } finally {
-            element.remove();
-        }
+        navigate(CHARACTER_SELECT);
     };
 
     return (
@@ -101,13 +24,13 @@ export default function FrameSkinSelect() {
             <div className="flex w-full justify-center mt-10">
                 <div className="mx-auto my-auto ml-20">
                     <PhotoFrame
-                        frameType="landscape"
+                        frameType={"ai"}
                         photos={selectedPhotos}
                         skin={selectedFrameSkin ?? undefined}
                     />
                 </div>
 
-                <div className="w-[80%] my-auto mx-auto scale-80 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
+                <div className="w-[80%] my-auto mx-auto scale-60 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}
@@ -117,7 +40,7 @@ export default function FrameSkinSelect() {
                             hover:opacity-80 data-[selected=true]:opacity-50"
                         >
                             <PhotoFrame
-                                frameType="landscape"
+                                frameType={"ai"}
                                 photos={[]}
                                 skin={skin}
                             />
@@ -138,20 +61,6 @@ export default function FrameSkinSelect() {
             <Button size="lg" onClick={handleFinishSelect}>
                 선택 완료
             </Button>
-            <div
-                ref={frameRef}
-                style={{
-                    position: "absolute",
-                    top: "-9999px",
-                    left: "-9999px",
-                }}
-            >
-                <PhotoFrame
-                    frameType="landscape"
-                    photos={selectedPhotos}
-                    skin={selectedFrameSkin ?? undefined}
-                />
-            </div>
         </div>
     );
 }

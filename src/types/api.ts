@@ -13,6 +13,15 @@ interface PaginatedResponse<T> {
 
 export type PhotosResponse = PaginatedResponse<Photo[]>;
 
+export interface PhotosTransformRequest {
+    images: string[];
+    style: string;
+}
+
+export interface PhotosTransformResponse {
+    transformedImages: string[];
+}
+
 export interface Guestbook {
     id: number;
     imageUrl: string;

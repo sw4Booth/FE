@@ -10,6 +10,7 @@ export interface PhotoBoothState {
     shouldPublishToGuestbook: boolean;
     uploadedPhotoId: number;
     qrImage: string;
+    transformedPhotos: string[];
 }
 
 export interface PhotoBoothContextType extends PhotoBoothState {
@@ -21,6 +22,7 @@ export interface PhotoBoothContextType extends PhotoBoothState {
     setPublishToGuestbook: Dispatch<SetStateAction<boolean>>;
     setUploadedPhotoId: Dispatch<SetStateAction<number>>;
     setQrImage: Dispatch<SetStateAction<string>>;
+    setTransformedPhotos: Dispatch<SetStateAction<string[]>>;
 }
 
 export const PhotoBoothContext = createContext<

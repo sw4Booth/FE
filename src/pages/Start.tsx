@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router";
-import Heading from "../components/Heading";
 import Button from "../components/Button";
 import { PHOTO_SHOOT } from "../constants/routes";
-import { SITE_BRANDING } from "../constants/constants";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useEffect } from "react";
 import { DefaultFrame } from "../frames/DefaultFrame";
@@ -35,11 +33,7 @@ export default function Start() {
     return (
         <div className="flex flex-col w-full h-full py-12 items-center justify-center gap-12">
             <div className="flex flex-col items-center gap-6">
-                <img
-                    className="w-48 h-auto rounded-full"
-                    src="/assets/greedy_badge.jpg"
-                />
-                <Heading>{SITE_BRANDING}</Heading>
+                <img className="w-140 h-auto" src="/assets/logo.png" />
             </div>
             <Button size="lg" onClick={() => navigate(PHOTO_SHOOT)}>
                 시작하기
