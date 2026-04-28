@@ -1,12 +1,20 @@
 import Heading from "../components/Heading";
 import Button from "../components/Button";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useNavigate } from "react-router";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { api } from "../libs/api";
 import { PRINT } from "../constants/routes";
 import { API_PHOTOS_TRANSFORM, API_PHOTOS_UPLOAD } from "../constants/api";
-import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
+import type {
+    PhotoUploadPayload,
+    PhotoUploadResponse,
+    PhotosTransformRequest,
+    PhotosTransformResponse,
+} from "../types/api";
+import PhotoFrame from "../components/PhotoFrame";
+import html2canvas from "html2canvas";
 
 const STYLES = [
     {
@@ -29,70 +37,42 @@ const STYLES = [
     },
 ];
 
-const imageUrlToBase64 = (url: string): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-            canvas.getContext("2d")?.drawImage(img, 0, 0);
-            resolve(canvas.toDataURL("image/jpeg").split(",")[1]);
-        };
-        img.onerror = reject;
-        img.src = url;
-    });
-};
-
-const loadImage = (src: string): Promise<HTMLImageElement> =>
-    new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = src;
-    });
-
 export default function CharacterSelect() {
+    const frameRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
-    const { selectedPhotos, setUploadedPhotoId } = usePhotoBooth();
+    const { selectedFrameSkin, selectedPhotos, setUploadedPhotoId } =
+        usePhotoBooth();
     const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-
-    interface TransformRequest {
-        images: string[];
-        style: string;
-    }
-
-    interface TransformResponse {
-        transformedImages: string[];
-    }
+    const [transformedPhotos, setTransformedPhotos] = useState<string[]>([]);
 
     const handleConfirm = async () => {
         if (!selectedStyle) return;
         setIsLoading(true);
 
-        try {
-            // 1. 선택된 사진 base64 변환
-            const base64Photos = await Promise.all(
-                selectedPhotos.map((url) => imageUrlToBase64(url)),
-            );
+        const frameSrc = frameRef.current;
+        if (!frameSrc) {
+            console.warn("No frameRef available for capture.");
+            return;
+        }
 
-            // 2. transform API 호출
+        try {
             const { data } = await api.post<
-                TransformResponse,
-                TransformRequest
+                PhotosTransformResponse,
+                PhotosTransformRequest
             >(API_PHOTOS_TRANSFORM, {
-                images: base64Photos,
+                images: selectedPhotos.map((dataUrl) =>
+                    dataUrl.replace(/^data:[^;]+;base64,/, ""),
+                ),
                 style: selectedStyle,
             });
+            flushSync(() => {
+                setTransformedPhotos(data.transformedImages);
+            });
 
-            // 3. 원본 + 변환본 합성 후 업로드
-            await generateAndUploadMerged(
-                selectedPhotos,
-                data.transformedImages,
-            );
+            const clone = frameSrc.cloneNode(true) as HTMLElement;
+            document.body.appendChild(clone);
+            await generateAndUploadImage(clone);
 
             navigate(PRINT);
         } catch (e) {
@@ -102,47 +82,50 @@ export default function CharacterSelect() {
         }
     };
 
-    const generateAndUploadMerged = async (
-        originals: string[],
-        transformed: string[],
-    ) => {
-        const canvas = document.createElement("canvas");
-        canvas.width = 1200;
-        canvas.height = 1800;
-        const ctx = canvas.getContext("2d")!;
+    const generateAndUploadImage = async (element: HTMLElement) => {
+        if (!frameRef.current) return;
 
-        const cellW = 600;
-        const cellH = 450;
+        try {
+            const canvas = await html2canvas(element, { scale: 2 }); // TODO: 인쇄 상태에 따라 scale(DPI) 수정
 
-        for (let i = 0; i < 4; i++) {
-            const y = i * cellH;
-            const orig = await loadImage(originals[i]);
-            ctx.drawImage(orig, 0, y, cellW, cellH);
+            canvas.toBlob(async (blob) => {
+                if (!blob) return;
 
-            const trans = await loadImage(
-                `data:image/jpeg;base64,${transformed[i]}`,
-            );
-            ctx.drawImage(trans, cellW, y, cellW, cellH);
+                // FormData에 담기
+                const formData = new FormData();
+                formData.append(
+                    "file",
+                    new File([blob], "image.jpg", { type: "image/jpeg" }),
+                );
+
+                // 서버 업로드
+                try {
+                    const { data } = await api.post<
+                        PhotoUploadResponse,
+                        PhotoUploadPayload
+                    >(API_PHOTOS_UPLOAD, formData);
+                    setUploadedPhotoId(data.id);
+
+                    console.log(
+                        "Upload success with id:",
+                        data.id,
+                        data.imageUrl,
+                    );
+                } catch (e) {
+                    console.error("Upload failed:", e);
+                }
+
+                // 다운로드 테스트
+                const link = document.createElement("a");
+                link.download = "photobooth.jpg";
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            }, "image/jpeg");
+        } catch (e) {
+            console.error("Failed to generate image:", e);
+        } finally {
+            element.remove();
         }
-
-        // toBlob을 Promise로 감쌈
-        const blob = await new Promise<Blob>((resolve, reject) =>
-            canvas.toBlob((b) =>
-                b ? resolve(b) : reject(new Error("toBlob failed")),
-            ),
-        );
-
-        const formData = new FormData();
-        formData.append(
-            "file",
-            new File([blob], "merged.png", { type: "image/png" }),
-        );
-
-        const { data } = await api.post<
-            PhotoUploadResponse,
-            PhotoUploadPayload
-        >(API_PHOTOS_UPLOAD, formData);
-        setUploadedPhotoId(data.id);
     };
 
     return (
@@ -225,6 +208,21 @@ export default function CharacterSelect() {
             >
                 {isLoading ? "변환 중..." : "선택 완료"}
             </Button>
+            <div
+                ref={frameRef}
+                style={{
+                    position: "absolute",
+                    top: "-9999px",
+                    left: "-9999px",
+                }}
+            >
+                <PhotoFrame
+                    frameType="ai"
+                    photos={selectedPhotos}
+                    transformedPhotos={transformedPhotos}
+                    skin={selectedFrameSkin ?? undefined}
+                />
+            </div>
         </div>
     );
 }

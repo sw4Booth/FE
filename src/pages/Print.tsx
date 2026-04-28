@@ -52,7 +52,7 @@ export default function Print() {
                 for (let i = 0; i < printCount; i++) {
                     const form = new FormData();
 
-                    form.append("file", blob, "merged.png");
+                    form.append("file", blob, "merged.jpg");
                     form.append("photoId", String(uploadedPhotoId));
 
                     await api.post(API_PRINT, form);
@@ -105,7 +105,7 @@ export default function Print() {
 
         ctx.drawImage(qr, qrX, qrY, qrSize, qrSize);
 
-        return canvas.toDataURL("image/png");
+        return canvas.toDataURL("image/jpeg");
     };
 
     const loadImage = (src: string): Promise<HTMLImageElement> => {
