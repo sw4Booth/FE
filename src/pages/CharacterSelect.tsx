@@ -116,10 +116,10 @@ export default function CharacterSelect() {
                 }
 
                 // 다운로드 테스트
-                const link = document.createElement("a");
-                link.download = "photobooth.jpg";
-                link.href = URL.createObjectURL(blob);
-                link.click();
+                // const link = document.createElement("a");
+                // link.download = "photobooth.jpg";
+                // link.href = URL.createObjectURL(blob);
+                // link.click();
             }, "image/jpeg");
         } catch (e) {
             console.error("Failed to generate image:", e);
