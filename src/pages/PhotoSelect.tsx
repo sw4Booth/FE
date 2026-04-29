@@ -27,14 +27,14 @@ export default function PhotoSelect() {
         <div className="flex flex-col items-center w-full">
             <Heading>사진을 선택해주세요</Heading>
             <div className="flex w-full justify-center mt-10">
-                <div className="mx-auto my-auto ml-20">
+                <div className="mx-auto my-auto ml-10">
                     <PhotoFrame
-                        frameType="landscape"
+                        frameType="ai"
                         photos={selectedPhotos}
                         skin={DefaultFrame}
                     />
                 </div>
-                <div className="w-[70%] my-auto mx-auto mr-20">
+                <div className="w-[60%] my-auto mx-auto mr-10">
                     {capturedPhotos.length > 0 && (
                         <div className="grid grid-cols-4">
                             {capturedPhotos.map((photo, i) => {

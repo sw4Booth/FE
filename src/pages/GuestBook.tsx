@@ -5,8 +5,8 @@ import { api } from "../libs/api";
 import { API_GUESTBOOK } from "../constants/api";
 import { type GuestbookResponse } from "../types/api";
 
-const PER_PAGE_SIZE = 20;
-const SLIDE_INTERVAL = 8000; // 8s 
+const PER_PAGE_SIZE = 10;
+const SLIDE_INTERVAL = 8000; // 8s
 
 export default function GuestBook() {
     const [currentPhotos, setCurrentPhotos] = useState<Photo[]>([]);
@@ -15,7 +15,10 @@ export default function GuestBook() {
 
     const fetchPage = async (page: number) => {
         try {
-            const { data } = await api.get<GuestbookResponse>(API_GUESTBOOK, { page, size: PER_PAGE_SIZE });
+            const { data } = await api.get<GuestbookResponse>(API_GUESTBOOK, {
+                page,
+                size: PER_PAGE_SIZE,
+            });
 
             setTotalPages(data.totalPages);
 
@@ -50,8 +53,14 @@ export default function GuestBook() {
 
     return (
         <div className="flex flex-col gap-4 w-full h-screen overflow-hidden">
-            <PhotoRow photos={currentPhotos.slice(0, PER_PAGE_SIZE / 2)} rowIndex={0} />
-            <PhotoRow photos={currentPhotos.slice(PER_PAGE_SIZE / 2)} rowIndex={1} />
+            <PhotoRow
+                photos={currentPhotos.slice(0, PER_PAGE_SIZE / 2)}
+                rowIndex={0}
+            />
+            <PhotoRow
+                photos={currentPhotos.slice(PER_PAGE_SIZE / 2)}
+                rowIndex={1}
+            />
         </div>
     );
 }
