@@ -1,1 +1,1 @@
-export const SITE_BRANDING = "그리디즘";
+export const SITE_BRANDING = "AI 캐릭터 포토부스";
