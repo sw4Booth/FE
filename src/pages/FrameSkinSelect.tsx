@@ -5,9 +5,11 @@ import { useNavigate } from "react-router";
 import { CHARACTER_SELECT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { DefaultFrame } from "../frames/DefaultFrame";
-import { BlackFrame } from "../frames/BlackFrame";
+import { BlueFrame } from "../frames/BlueFrame";
+import { YellowFrame } from "../frames/YellowFrame";
+import { GreenFrame } from "../frames/GreenFrame";
 
-const frameSkins = [DefaultFrame, BlackFrame];
+const frameSkins = [DefaultFrame, BlueFrame, YellowFrame, GreenFrame];
 
 export default function FrameSkinSelect() {
     const { selectedPhotos, selectedFrameSkin, setSelectedFrameSkin } =
@@ -19,38 +21,56 @@ export default function FrameSkinSelect() {
     };
 
     return (
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full h-full">
             <Heading>배경 프레임을 선택해주세요</Heading>
-            <div className="flex w-full justify-center mt-10">
-                <div className="mx-auto my-auto ml-20">
-                    <PhotoFrame
-                        frameType={"ai"}
-                        photos={selectedPhotos}
-                        skin={selectedFrameSkin ?? undefined}
-                    />
+            <div className="flex flex-1 items-center justify-center gap-50 px-8 w-full">
+                <div
+                    className="relative overflow-hidden flex-shrink-0"
+                    style={{ width: "288px", height: "432px" }}
+                >
+                    <div
+                        style={{
+                            transform: "scale(0.75)",
+                            transformOrigin: "top left",
+                        }}
+                    >
+                        <PhotoFrame
+                            frameType={"ai"}
+                            photos={selectedPhotos}
+                            skin={selectedFrameSkin ?? undefined}
+                        />
+                    </div>
                 </div>
 
-                <div className="w-[80%] my-auto mx-auto scale-60 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
+                <div className="grid grid-cols-2 gap-3">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}
                             onClick={() => setSelectedFrameSkin(skin)}
                             data-selected={selectedFrameSkin === skin}
-                            className="relative cursor-pointer transition-all duration-200 
+                            className="relative cursor-pointer overflow-hidden transition-all duration-200
                             hover:opacity-80 data-[selected=true]:opacity-50"
+                            style={{ width: "144px", height: "216px" }}
                         >
-                            <PhotoFrame
-                                frameType={"ai"}
-                                photos={[]}
-                                skin={skin}
-                            />
+                            <div
+                                style={{
+                                    transform: "scale(0.375)",
+                                    transformOrigin: "top left",
+                                }}
+                            >
+                                <PhotoFrame
+                                    frameType={"ai"}
+                                    photos={[]}
+                                    skin={skin}
+                                />
+                            </div>
 
                             {selectedFrameSkin === skin && (
                                 <div className="absolute inset-0 flex items-center justify-center z-10 rounded-md">
                                     <img
                                         src="/assets/check.svg"
                                         alt="check"
-                                        className="w-25 h-25"
+                                        className="w-12 h-12"
                                     />
                                 </div>
                             )}
