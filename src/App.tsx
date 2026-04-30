@@ -22,12 +22,14 @@ import {
     ADMIN,
     ADMIN_LOGIN,
     CHARACTER_SELECT,
+    AI_PROGRESS,
 } from "./constants/routes";
 import GuestBook from "./pages/GuestBook";
 import Admin from "./pages/Admin";
 import { SITE_BRANDING } from "./constants/constants";
 import AdminLogin from "./pages/AdminLogin";
 import CharacterSelect from "./pages/CharacterSelect";
+import AiProgress from "./pages/AiProgress";
 
 function App() {
     return (
@@ -57,6 +59,10 @@ function App() {
                             <Route
                                 path={CHARACTER_SELECT}
                                 element={<CharacterSelect />}
+                            />
+                            <Route
+                                path={AI_PROGRESS}
+                                element={<AiProgress />}
                             />
                             <Route path={PRINT} element={<Print />} />
                             <Route

@@ -10,13 +10,15 @@ const SHOOT_INTERVAL = 5000;
 export default function PhotoShoot() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [currentCount, setCurrentCount] = useState(0);
-    const { setCapturedPhotos } = usePhotoBooth();
+    const { setCapturedPhotos, setShootingVideoUrl } = usePhotoBooth();
     const [remainingTime, setRemainingTime] = useState(SHOOT_INTERVAL);
     const navigate = useNavigate();
     const [countdown, setCountdown] = useState<number | null>(null);
     const [flash, setFlash] = useState(false);
     const timeLeft = useRef(SHOOT_INTERVAL);
     const timer = useRef<number | null>(null);
+    const mediaRecorder = useRef<MediaRecorder | null>(null);
+    const recordedChunks = useRef<Blob[]>([]);
 
     function stopCamera() {
         if (videoRef.current && videoRef.current.srcObject) {
@@ -24,6 +26,12 @@ export default function PhotoShoot() {
                 videoRef.current.srcObject as MediaStream
             ).getTracks();
             tracks.forEach((track) => track.stop());
+        }
+    }
+
+    function stopRecording() {
+        if (mediaRecorder.current && mediaRecorder.current.state !== "inactive") {
+            mediaRecorder.current.stop();
         }
     }
 
@@ -36,6 +44,18 @@ export default function PhotoShoot() {
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                 }
+
+                recordedChunks.current = [];
+                const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+                recorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) recordedChunks.current.push(e.data);
+                };
+                recorder.onstop = () => {
+                    const blob = new Blob(recordedChunks.current, { type: "video/webm" });
+                    setShootingVideoUrl(URL.createObjectURL(blob));
+                };
+                mediaRecorder.current = recorder;
+                recorder.start();
             } catch (err) {
                 console.error(err);
             }
@@ -57,6 +77,7 @@ export default function PhotoShoot() {
                         const newCount = prev + 1;
                         if (newCount >= TOTAL_SHOTS) {
                             clearInterval(timer.current!);
+                            stopRecording();
                             stopCamera();
                             navigate(PHOTO_SELECT);
                         }
@@ -75,6 +96,7 @@ export default function PhotoShoot() {
 
         return () => {
             if (timer.current) clearInterval(timer.current);
+            stopRecording();
             stopCamera();
         };
     }, [navigate]);
@@ -107,6 +129,7 @@ export default function PhotoShoot() {
             const newCount = prev + 1;
             if (newCount >= TOTAL_SHOTS) {
                 clearInterval(timer.current!);
+                stopRecording();
                 stopCamera();
                 navigate(PHOTO_SELECT);
             }
