@@ -19,6 +19,7 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
     const [uploadedPhotoId, setUploadedPhotoId] = useState<number>(-1);
     const [qrImage, setQrImage] = useState<string>("");
     const [transformedPhotos, setTransformedPhotos] = useState<string[]>([]);
+    const [shootingVideoUrl, setShootingVideoUrl] = useState<string | null>(null);
 
     const value: PhotoBoothContextType = {
         frameType,
@@ -30,6 +31,7 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
         uploadedPhotoId,
         qrImage,
         transformedPhotos,
+        shootingVideoUrl,
         setFrameType,
         setCapturedPhotos,
         setSelectedPhotos,
@@ -39,6 +41,7 @@ export const PhotoBoothProvider: React.FC<{ children: React.ReactNode }> = ({
         setUploadedPhotoId,
         setQrImage,
         setTransformedPhotos,
+        setShootingVideoUrl,
     };
 
     return (
