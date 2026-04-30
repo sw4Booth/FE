@@ -11,6 +11,7 @@ export interface PhotoBoothState {
     uploadedPhotoId: number;
     qrImage: string;
     transformedPhotos: string[];
+    shootingVideoUrl: string | null;
 }
 
 export interface PhotoBoothContextType extends PhotoBoothState {
@@ -23,6 +24,7 @@ export interface PhotoBoothContextType extends PhotoBoothState {
     setUploadedPhotoId: Dispatch<SetStateAction<number>>;
     setQrImage: Dispatch<SetStateAction<string>>;
     setTransformedPhotos: Dispatch<SetStateAction<string[]>>;
+    setShootingVideoUrl: Dispatch<SetStateAction<string | null>>;
 }
 
 export const PhotoBoothContext = createContext<
