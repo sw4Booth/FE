@@ -17,6 +17,7 @@ export default function Admin() {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
     const [printJobs, setPrintJobs] = useState<PrintJob[]>([]);
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
     const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
@@ -26,6 +27,7 @@ export default function Admin() {
             const { data } = await api.get<PhotosResponse>(API_PHOTOS, { page, size: PER_PAGE_SIZE });
             setPhotos(data.content);
             setTotalPages(data.totalPages);
+            setTotalElements(data.totalElements);
         } catch (e) {
             console.error(e);
         }
@@ -129,7 +131,7 @@ export default function Admin() {
                             <div className="flex justify-between items-center">
                                 <h2 className="text-xl font-bold flex items-center gap-2">
                                     사진 관리
-                                    <span className="px-2 py-0.5 text-sm bg-primary-600 text-white rounded-lg">{photos.length ?? 0}</span>
+                                    <span className="px-2 py-0.5 text-sm bg-primary-600 text-white rounded-lg">{totalElements}</span>
                                 </h2>
                                 <div className="flex items-center justify-center gap-4">
                                     <Button variant="outline" color="gray" size="sm" disabled={page === 0} onClick={() => setPage(page - 1)}>이전</Button>
