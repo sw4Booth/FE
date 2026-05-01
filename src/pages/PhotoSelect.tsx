@@ -42,15 +42,22 @@ export default function PhotoSelect() {
                                     selectedPhotos.includes(photo);
 
                                 return (
-                                    <img
+                                    <div
                                         key={i}
-                                        src={photo}
-                                        alt={`photo-${i}`}
-                                        onClick={() => handlePhotoClick(photo)}
-                                        data-selected={isSelected}
-                                        className="aspect-[7/5] object-cover p-0.5 cursor-pointer transition-all duration-200 
-                                        hover:opacity-80 data-[selected=true]:opacity-50"
-                                    />
+                                        className="relative p-0.5"
+                                    >
+                                        <img
+                                            src={photo}
+                                            alt={`photo-${i}`}
+                                            onClick={() => handlePhotoClick(photo)}
+                                            data-selected={isSelected}
+                                            className="aspect-7/5 w-full object-cover cursor-pointer transition-all duration-200
+                                            hover:opacity-80 data-[selected=true]:opacity-50"
+                                        />
+                                        <span className="absolute top-1.5 left-1.5 bg-primary-600/70 text-white text-sm font-bold w-6 h-6 flex items-center justify-center rounded-full pointer-events-none">
+                                            {i + 1}
+                                        </span>
+                                    </div>
                                 );
                             })}
                         </div>
