@@ -64,7 +64,7 @@ export default function AiProgress() {
         const clone = frameRef.current.cloneNode(true) as HTMLElement;
         document.body.appendChild(clone);
 
-        html2canvas(clone, { scale: 2 })
+        html2canvas(clone, { scale: 3 })
             .then((canvas) => {
                 canvas.toBlob(async (blob) => {
                     if (!blob) {
