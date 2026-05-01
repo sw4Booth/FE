@@ -11,9 +11,37 @@ import {
     type ShareLinkCreateResponse,
     type ShareLinkCreatePayload,
 } from "../types/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const MAX_PRINT_COUNT = 4;
+
+const loadImage = (src: string): Promise<HTMLImageElement> =>
+    new Promise((resolve, reject) => {
+        const image = new Image();
+        image.crossOrigin = "anonymous";
+        image.onload = () => resolve(image);
+        image.onerror = (e) => reject(e);
+        image.src = src;
+    });
+
+const mergeImageWithQR = async (photoUrl: string, qrBase64: string) => {
+    const photo = await loadImage(`${photoUrl}?t=${Date.now()}`);
+    const qr = await loadImage(qrBase64);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = photo.width;
+    canvas.height = photo.height;
+
+    const ctx = canvas.getContext("2d")!;
+    ctx.drawImage(photo, 0, 0, canvas.width, canvas.height);
+
+    const qrSize = canvas.width * 0.15;
+    const qrX = canvas.width - qrSize - 24;
+    const qrY = canvas.height - qrSize - 24;
+    ctx.drawImage(qr, qrX, qrY, qrSize, qrSize);
+
+    return canvas.toDataURL("image/jpeg");
+};
 
 export default function Print() {
     const {
@@ -26,6 +54,7 @@ export default function Print() {
     } = usePhotoBooth();
     const [mergedDataUrl, setMergedDataUrl] = useState<string | null>(null);
     const navigate = useNavigate();
+    const printDone = useRef(false);
 
     const handleCountDecrementClick = () => {
         setPrintCount((prev) => Math.max(1, prev - 1));
@@ -39,6 +68,31 @@ export default function Print() {
         setPublishToGuestbook(!shouldPublishToGuestbook);
     };
 
+    const handlePrintClick = useCallback(async () => {
+        try {
+            const { data } = await api.post<
+                ShareLinkCreateResponse,
+                ShareLinkCreatePayload
+            >(API_SHARE, { photoId: uploadedPhotoId });
+
+            setQrImage(data.qrImageBase64);
+            const merged = await mergeImageWithQR(
+                data.imageUrl,
+                data.qrImageBase64,
+            );
+
+            setMergedDataUrl(merged);
+        } catch (e) {
+            console.error(e);
+        }
+    }, [uploadedPhotoId, setQrImage]);
+
+    useEffect(() => {
+        if (uploadedPhotoId === -1 || printDone.current) return;
+        printDone.current = true;
+        handlePrintClick();
+    }, [uploadedPhotoId, handlePrintClick]);
+
     useEffect(() => {
         if (!mergedDataUrl) return;
 
@@ -47,7 +101,7 @@ export default function Print() {
                 const res = await fetch(mergedDataUrl);
                 const blob = await res.blob();
 
-                navigate(PRINT_PROGRESS); // 페이지 먼저 이동
+                navigate(PRINT_PROGRESS);
 
                 for (let i = 0; i < printCount; i++) {
                     const form = new FormData();
@@ -66,57 +120,6 @@ export default function Print() {
 
         print();
     }, [mergedDataUrl]);
-
-    const handlePrintClick = async () => {
-        try {
-            const { data } = await api.post<
-                ShareLinkCreateResponse,
-                ShareLinkCreatePayload
-            >(API_SHARE, { photoId: uploadedPhotoId });
-
-            setQrImage(data.qrImageBase64);
-            const merged = await mergeImageWithQR(
-                data.imageUrl,
-                data.qrImageBase64,
-            );
-
-            setMergedDataUrl(merged);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    const mergeImageWithQR = async (photoUrl: string, qrBase64: string) => {
-        const photo = await loadImage(`${photoUrl}?t=${Date.now()}`);
-        const qr = await loadImage(qrBase64);
-
-        const canvas = document.createElement("canvas");
-        canvas.width = photo.width;
-        canvas.height = photo.height;
-
-        const ctx = canvas.getContext("2d")!;
-
-        ctx.drawImage(photo, 0, 0, canvas.width, canvas.height);
-
-        // QR 오른쪽 아래 배치
-        const qrSize = canvas.width * 0.15;
-        const qrX = canvas.width - qrSize - 24;
-        const qrY = canvas.height - qrSize - 24;
-
-        ctx.drawImage(qr, qrX, qrY, qrSize, qrSize);
-
-        return canvas.toDataURL("image/jpeg");
-    };
-
-    const loadImage = (src: string): Promise<HTMLImageElement> => {
-        return new Promise((resolve, reject) => {
-            const image = new Image();
-            image.crossOrigin = "anonymous";
-            image.onload = () => resolve(image);
-            image.onerror = (e) => reject(e);
-            image.src = src;
-        });
-    };
 
     const publishToGuestbook = async () => {
         try {
