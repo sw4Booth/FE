@@ -13,13 +13,13 @@ const STYLES = [
     },
     {
         id: "cartoon",
-        name: "말랑 카툰",
-        example: "(짱구 스타일)",
+        name: "카툰 3D",
+        example: "(디즈니 스타일)",
         thumbSrc: "/assets/styles/cartoon.png",
     },
     {
         id: "village",
-        name: "포근한 마을 감성",
+        name: "동물 피규어",
         example: "(동물의 숲 스타일)",
         thumbSrc: "/assets/styles/village.png",
     },

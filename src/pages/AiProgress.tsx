@@ -14,7 +14,7 @@ import PhotoFrame from "../components/PhotoFrame";
 import html2canvas from "html2canvas";
 import Heading from "../components/Heading";
 
-const TIMELAPSE_SPEED = 6;
+const TIMELAPSE_SPEED = 4;
 
 export default function AiProgress() {
     const location = useLocation();
@@ -53,7 +53,12 @@ export default function AiProgress() {
     }, []);
 
     useEffect(() => {
-        if (transformedPhotos.length === 0 || !frameRef.current || uploadDone.current) return;
+        if (
+            transformedPhotos.length === 0 ||
+            !frameRef.current ||
+            uploadDone.current
+        )
+            return;
         uploadDone.current = true;
 
         const clone = frameRef.current.cloneNode(true) as HTMLElement;
@@ -106,7 +111,8 @@ export default function AiProgress() {
                         playsInline
                         className="w-full h-full object-cover rounded-lg -scale-x-100"
                         onLoadedMetadata={(e) => {
-                            (e.target as HTMLVideoElement).playbackRate = TIMELAPSE_SPEED;
+                            (e.target as HTMLVideoElement).playbackRate =
+                                TIMELAPSE_SPEED;
                         }}
                     />
                 ) : (
@@ -127,7 +133,11 @@ export default function AiProgress() {
 
             <div
                 ref={frameRef}
-                style={{ position: "absolute", top: "-9999px", left: "-9999px" }}
+                style={{
+                    position: "absolute",
+                    top: "-9999px",
+                    left: "-9999px",
+                }}
             >
                 <PhotoFrame
                     frameType="ai"
