@@ -15,6 +15,8 @@ import html2canvas from "html2canvas";
 import Heading from "../components/Heading";
 
 const TIMELAPSE_SPEED = 4;
+const TRANSFORM_MAX_RETRIES = 3;
+const TRANSFORM_RETRY_DELAY = 2000;
 
 export default function AiProgress() {
     const location = useLocation();
@@ -30,22 +32,35 @@ export default function AiProgress() {
     const frameRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
     const uploadDone = useRef(false);
+    const transformDone = useRef(false);
 
     useEffect(() => {
+        if (transformDone.current) return;
+        transformDone.current = true;
+
         async function transform() {
-            try {
-                const { data } = await api.post<
-                    PhotosTransformResponse,
-                    PhotosTransformRequest
-                >(API_PHOTOS_TRANSFORM, {
-                    images: selectedPhotos.map((dataUrl) =>
-                        dataUrl.replace(/^data:[^;]+;base64,/, ""),
-                    ),
-                    style,
-                });
-                setTransformedPhotos(data.transformedImages);
-            } catch (e) {
-                console.error("Transform failed:", e);
+            for (let attempt = 0; attempt <= TRANSFORM_MAX_RETRIES; attempt++) {
+                try {
+                    const { data } = await api.post<
+                        PhotosTransformResponse,
+                        PhotosTransformRequest
+                    >(API_PHOTOS_TRANSFORM, {
+                        images: selectedPhotos.map((dataUrl) =>
+                            dataUrl.replace(/^data:[^;]+;base64,/, ""),
+                        ),
+                        style,
+                    });
+                    setTransformedPhotos(data.transformedImages);
+                    return;
+                } catch (e: unknown) {
+                    const status = (e as { response?: { status?: number } })?.response?.status;
+                    if (attempt < TRANSFORM_MAX_RETRIES && status !== undefined && status >= 500) {
+                        await new Promise((r) => setTimeout(r, TRANSFORM_RETRY_DELAY * (attempt + 1)));
+                        continue;
+                    }
+                    console.error("Transform failed:", e);
+                    return;
+                }
             }
         }
 
