@@ -3,6 +3,7 @@ import { api, clearAuthToken, setAuthToken } from "../libs/api";
 import type { PhotosResponse, PrintQueueResponse, PrintJob } from "../types/api";
 import { API_PHOTOS, API_PRINT_QUEUE } from "../constants/api";
 import Button from "../components/Button";
+import Lightbox from "../components/Lightbox";
 import { SITE_BRANDING } from "../constants/constants";
 import { ADMIN, ADMIN_LOGIN } from "../constants/routes";
 import type { Photo } from "../types/Photo";
@@ -18,7 +19,7 @@ export default function Admin() {
     const [totalPages, setTotalPages] = useState(0);
     const [printJobs, setPrintJobs] = useState<PrintJob[]>([]);
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
     const fetchPhotos = async () => {
         try {
@@ -39,21 +40,26 @@ export default function Admin() {
         }
     };
 
+    const closeLightbox = () => {
+        setLightboxSrc(null);
+        setSelectedPhoto(null);
+    };
+
     const handlePhotoClick = (item: Photo) => {
         setSelectedPhoto(item);
-        setModalOpen(true);
+        setLightboxSrc(item.imageUrl);
     };
 
     const handleDelete = async (id: number) => {
         if (!confirm("정말 삭제하시겠습니까?")) return;
         await api.delete(`${API_PHOTOS}/${id}`);
-        setModalOpen(false);
+        closeLightbox();
         fetchPhotos();
     };
 
     const handlePrint = async (id: number) => {
         await api.post(`${API_PHOTOS}/${id}/print`);
-        setModalOpen(false);
+        closeLightbox();
         alert("출력 요청이 완료되었습니다.");
     };
 
@@ -146,20 +152,6 @@ export default function Admin() {
                                     </div>
                                 ))}
                             </div>
-                            {isModalOpen && selectedPhoto && (
-                                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                    <div className="bg-white p-6 rounded-lg w-[320px]">
-                                        <div className="flex items-center justify-between mb-6">
-                                            <h3 className="text-xl font-semibold">작업 선택</h3>
-                                            <span className="flex items-center justify-center w-6 h-6 p-4 hover:bg-gray-50 rounded-lg cursor-pointer" onClick={() => setModalOpen(false)}>X</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <Button variant="solid" onClick={() => handleDelete(selectedPhoto.id)}>삭제</Button>
-                                            <Button variant="outline" onClick={() => handlePrint(selectedPhoto.id)}>인쇄</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     )}
                     {selectedMenu === "print-queue" && (
@@ -188,7 +180,11 @@ export default function Admin() {
                                             <td className="p-3 font-mono text-xs">{job.id}</td>
                                             <td className="p-3">
                                                 {job.imageUrl && (
-                                                    <img src={job.imageUrl} className="w-12 h-12 object-cover rounded" />
+                                                    <img
+                                                        src={job.imageUrl}
+                                                        className="w-12 h-12 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+                                                        onClick={() => setLightboxSrc(job.imageUrl)}
+                                                    />
                                                 )}
                                             </td>
                                             <td className="p-3">
@@ -220,6 +216,16 @@ export default function Admin() {
                     )}
                 </main>
             </div>
+            <Lightbox
+                src={lightboxSrc}
+                onClose={closeLightbox}
+                actions={selectedPhoto && (
+                    <>
+                        <Button variant="outline" onClick={() => handleDelete(selectedPhoto.id)}>삭제</Button>
+                        <Button variant="solid" onClick={() => handlePrint(selectedPhoto.id)}>인쇄</Button>
+                    </>
+                )}
+            />
         </div>
     );
 }
