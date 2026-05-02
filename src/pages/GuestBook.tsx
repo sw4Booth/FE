@@ -5,7 +5,7 @@ import { api } from "../libs/api";
 import { API_GUESTBOOK } from "../constants/api";
 import { type GuestbookResponse } from "../types/api";
 
-const PER_PAGE_SIZE = 10;
+const PER_PAGE_SIZE = 16;
 const SLIDE_INTERVAL = 8000; // 8s
 
 export default function GuestBook() {
