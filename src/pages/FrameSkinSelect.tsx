@@ -13,11 +13,15 @@ import { BlackFrame } from "../frames/Black";
 import { GreenFrame } from "../frames/Green";
 import { YellowFrame } from "../frames/Yellow";
 import { NavyFrame } from "../frames/Navy";
+import { PurpleFrame } from "../frames/Purple";
+import { BasicBlackFrame } from "../frames/BasicBlack";
+import { BasicWhiteFrame } from "../frames/BasicWhite";
 import { BrownFrame } from "../frames/Brown";
 import { BlueFrame } from "../frames/Blue";
-import { PurpleFrame } from "../frames/Purple";
 
 const frameSkins = [
+    BasicBlackFrame,
+    BasicWhiteFrame,
     BlackFrame,
     GreenFrame,
     YellowFrame,
