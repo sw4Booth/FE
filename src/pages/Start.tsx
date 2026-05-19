@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import Heading from "../components/Heading";
 import Button from "../components/Button";
-import { FRAME_TYPE_SELECT } from "../constants/routes";
+import { PHOTO_SHOOT } from "../constants/routes";
 import { SITE_BRANDING } from "../constants/constants";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
 import { useEffect } from "react";
@@ -41,7 +41,7 @@ export default function Start() {
                 />
                 <Heading>{SITE_BRANDING}</Heading>
             </div>
-            <Button size="lg" onClick={() => navigate(FRAME_TYPE_SELECT)}>
+            <Button size="lg" onClick={() => navigate(PHOTO_SHOOT)}>
                 시작하기
             </Button>
         </div>
