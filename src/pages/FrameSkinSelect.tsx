@@ -111,13 +111,13 @@ export default function FrameSkinSelect() {
                     />
                 </div>
 
-                <div className="w-[80%] my-auto mx-auto scale-80 flex justify-center gap-5 overflow-x-auto overflow-y-hidden">
+                <div className="w-[80%] my-auto mx-auto scale-80 flex justify-start gap-5 overflow-x-auto overflow-y-hidden">
                     {frameSkins.map((skin, idx) => (
                         <div
                             key={idx}
                             onClick={() => setSelectedFrameSkin(skin)}
                             data-selected={selectedFrameSkin === skin}
-                            className="relative cursor-pointer transition-all duration-200 
+                            className="relative shrink-0 cursor-pointer transition-all duration-200
                             hover:opacity-80 data-[selected=true]:opacity-50"
                         >
                             <PhotoFrame
