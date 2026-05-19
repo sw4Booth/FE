@@ -4,23 +4,27 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PRINT } from "../constants/routes";
 import { usePhotoBooth } from "../hooks/usePhotoBooth";
-import { DefaultFrame } from "../frames/DefaultFrame";
-import { BlackGreedyFrame } from "../frames/BlackGreedyFrame";
-import { PotatoGreedyFrame } from "../frames/PotatoGreedyFrame";
-import { OceanGreedyFrame } from "../frames/OceanGreedyFrame";
-import { SpaceGreedyFrame } from "../frames/SpaceGreedyFrame";
 import { api } from "../libs/api";
 import { API_PHOTOS_UPLOAD } from "../constants/api";
 import type { PhotoUploadPayload, PhotoUploadResponse } from "../types/api";
 import { useRef } from "react";
 import html2canvas from "html2canvas";
+import { BlackFrame } from "../frames/Black";
+import { GreenFrame } from "../frames/Green";
+import { YellowFrame } from "../frames/Yellow";
+import { NavyFrame } from "../frames/Navy";
+import { BrownFrame } from "../frames/brown";
+import { BlueFrame } from "../frames/blue";
+import { PurpleFrame } from "../frames/Purple";
 
 const frameSkins = [
-    DefaultFrame,
-    BlackGreedyFrame,
-    PotatoGreedyFrame,
-    OceanGreedyFrame,
-    SpaceGreedyFrame,
+    BlackFrame,
+    GreenFrame,
+    YellowFrame,
+    NavyFrame,
+    BrownFrame,
+    BlueFrame,
+    PurpleFrame,
 ];
 
 export default function FrameSkinSelect() {
@@ -62,7 +66,7 @@ export default function FrameSkinSelect() {
                 const formData = new FormData();
                 formData.append(
                     "file",
-                    new File([blob], "image.png", { type: "image/png" })
+                    new File([blob], "image.png", { type: "image/png" }),
                 );
 
                 // 서버 업로드
@@ -76,7 +80,7 @@ export default function FrameSkinSelect() {
                     console.log(
                         "Upload success with id:",
                         data.id,
-                        data.imageUrl
+                        data.imageUrl,
                     );
                 } catch (e) {
                     console.error("Upload failed:", e);
