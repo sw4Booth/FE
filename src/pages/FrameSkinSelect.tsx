@@ -18,6 +18,8 @@ import { BasicBlackFrame } from "../frames/BasicBlack";
 import { BasicWhiteFrame } from "../frames/BasicWhite";
 import { BrownFrame } from "../frames/Brown";
 import { BlueFrame } from "../frames/Blue";
+import { RedFrame } from "../frames/Red";
+import { VintageFrame } from "../frames/Vintage";
 
 const frameSkins = [
     BasicBlackFrame,
@@ -25,10 +27,12 @@ const frameSkins = [
     BlackFrame,
     GreenFrame,
     YellowFrame,
-    NavyFrame,
+    RedFrame,
+    VintageFrame,
     BrownFrame,
     BlueFrame,
     PurpleFrame,
+    NavyFrame,
 ];
 
 export default function FrameSkinSelect() {
